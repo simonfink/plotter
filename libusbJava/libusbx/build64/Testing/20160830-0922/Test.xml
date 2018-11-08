@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="(empty)"
+	BuildStamp="20160830-0922-Experimental"
+	Name="(empty)"
+	Generator="ctest-3.0.1"
+	CompilerName=""
+	OSName="Windows"
+	Hostname="pcinf002"
+	OSRelease="7"
+	OSVersion="S (Build 7601)"
+	OSPlatform="x86"
+	Is64Bits="0"
+	VendorString="GenuineIntel"
+	VendorID="Intel Corporation"
+	FamilyID="6"
+	ModelID="15"
+	ProcessorCacheSize="-1"
+	NumberOfLogicalCPU="4"
+	NumberOfPhysicalCPU="1"
+	TotalVirtualMemory="2047"
+	TotalPhysicalMemory="8061"
+	LogicalProcessorsPerPhysical="4"
+	ProcessorClockFrequency="2659"
+>
+<Testing>
+	<StartDateTime>Aug 30 11:22 W. Europe Daylight Time</StartDateTime>
+	<StartTestTime>1472548943</StartTestTime>
+	<TestList>
+		<Test>./UseTestMPC555BDI</Test>
+		<Test>./java/test/ch/ntb/inf/libusb/test/junit/TestClassLoad</Test>
+	</TestList>
+	<Test Status="passed">
+		<Name>UseTestMPC555BDI</Name>
+		<Path>.</Path>
+		<FullName>./UseTestMPC555BDI</FullName>
+		<FullCommandLine>&quot;C:\Program Files\Java\jdk1.7.0_67\bin\java.exe&quot; &quot;-Djava.library.path=C:/Users/libusb/libusbdev/libusbx/build64/LibusbJava/&quot; &quot;-cp&quot; &quot;C:/Users/libusb/libusbdev/libusbx/build64/java/src/LibusbJava.jar&quot; &quot;ch.ntb.inf.libusb.test.UseTestLibusbJava&quot;</FullCommandLine>
+		<Results>
+			<NamedMeasurement type="numeric/double" name="Execution Time"><Value>0.1404</Value></NamedMeasurement>
+			<NamedMeasurement type="text/string" name="Completion Status"><Value>Completed</Value></NamedMeasurement>
+			<NamedMeasurement type="text/string" name="Command Line"><Value>&quot;C:\Program Files\Java\jdk1.7.0_67\bin\java.exe&quot; &quot;-Djava.library.path=C:/Users/libusb/libusbdev/libusbx/build64/LibusbJava/&quot; &quot;-cp&quot; &quot;C:/Users/libusb/libusbdev/libusbx/build64/java/src/LibusbJava.jar&quot; &quot;ch.ntb.inf.libusb.test.UseTestLibusbJava&quot;</Value></NamedMeasurement>
+			<Measurement>
+				<Value>UseTests started:
+search Device:
+1 duplicates found
+Device found with vid 0x8235, pid 0x100
+Bus: 8 Port: 4
+finished.
+Port Numbers to root: 4 
+Device Address: 0x7
+Device Speed: HIGH
+--Parent Device--
+Parent Device: vid: 0x8086, pid: 0x293c
+Bus: 8 Port: 0
+Port Numbers to root: 
+-----------------
+Config Descriptors:
+nofConfigs: 1
+Config 0: configValue: 1
+Active Descriptor of devDesc: 
+ConfigValue ActiveConfigDesc: 1
+-----------ActiveConfigDesc---------------
+Cfg found, pos: 0 value: 1
+--------Interfaces---------
+NofInterfaces device: 3
+device:
+------------
+Interface 0 nofAltSettings: 1
+Interface Number dev:0
+Alternate Setting:0
+Number of Endpoints: 2
+---Endpoints---
+Endpoint 0:
+Address: 2
+Direction: Endpoint-OUT
+MaxPacketSize: 512
+MaxIsoPacketSize: 512
+Endpoint 1:
+Address: 134
+Direction: Endpoint-IN
+MaxPacketSize: 512
+MaxIsoPacketSize: 512
+Interface 1 nofAltSettings: 1
+Interface Number dev:1
+Alternate Setting:0
+Number of Endpoints: 1
+---Endpoints---
+Endpoint 0:
+Address: 129
+Direction: Endpoint-IN
+MaxPacketSize: ...
+The rest of the test output was removed since it exceeds the threshold of 1024 bytes.
+</Value>
+			</Measurement>
+		</Results>
+	</Test>
+	<Test Status="failed">
+		<Name>TestClassLoad</Name>
+		<Path>./java/test/ch/ntb/inf/libusb/test/junit</Path>
+		<FullName>./java/test/ch/ntb/inf/libusb/test/junit/TestClassLoad</FullName>
+		<FullCommandLine>&quot;C:\Program Files\Java\jdk1.7.0_67\bin\java.exe&quot; &quot;-Djava.library.path=C:/Users/libusb/libusbdev/libusbx/build64/LibusbJava/&quot; &quot;-cp&quot; &quot;C:/Users/libusb/libusbdev/libusbx/build64/java/src/LibusbJava.jar&quot; &quot;ch.ntb.inf.libusb.test.junit.Mpc555UsbBdiLibusbJavaTest&quot;</FullCommandLine>
+		<Results>
+			<NamedMeasurement type="text/string" name="Exit Code"><Value>Failed</Value></NamedMeasurement>
+			<NamedMeasurement type="text/string" name="Exit Value"><Value>1</Value></NamedMeasurement>
+			<NamedMeasurement type="numeric/double" name="Execution Time"><Value>0.110201</Value></NamedMeasurement>
+			<NamedMeasurement type="text/string" name="Completion Status"><Value>Completed</Value></NamedMeasurement>
+			<NamedMeasurement type="text/string" name="Command Line"><Value>&quot;C:\Program Files\Java\jdk1.7.0_67\bin\java.exe&quot; &quot;-Djava.library.path=C:/Users/libusb/libusbdev/libusbx/build64/LibusbJava/&quot; &quot;-cp&quot; &quot;C:/Users/libusb/libusbdev/libusbx/build64/java/src/LibusbJava.jar&quot; &quot;ch.ntb.inf.libusb.test.junit.Mpc555UsbBdiLibusbJavaTest&quot;</Value></NamedMeasurement>
+			<Measurement>
+				<Value>Error: Could not find or load main class ch.ntb.inf.libusb.test.junit.Mpc555UsbBdiLibusbJavaTest
+</Value>
+			</Measurement>
+		</Results>
+	</Test>
+	<EndDateTime>Aug 30 11:22 W. Europe Daylight Time</EndDateTime>
+	<EndTestTime>1472548943</EndTestTime>
+<ElapsedMinutes>0</ElapsedMinutes></Testing>
+</Site>

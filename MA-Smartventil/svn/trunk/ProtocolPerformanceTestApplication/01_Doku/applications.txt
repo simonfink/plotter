@@ -1,0 +1,4 @@
+MQTT:
+	Python:
+		install paho for python
+		in examples, run rabbitmq_*.py

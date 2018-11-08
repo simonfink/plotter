@@ -1,0 +1,3 @@
+/home/simon/workspace/kdev-ws/tutorial2/CMakeFiles/edit_cache.dir
+/home/simon/workspace/kdev-ws/tutorial2/CMakeFiles/rebuild_cache.dir
+/home/simon/workspace/kdev-ws/tutorial2/CMakeFiles/blockTest2.dir

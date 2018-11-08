@@ -1,0 +1,15 @@
+package ch.ntb.inf.libusbJava;
+
+public class Descriptor {
+	
+	private byte length;
+	private DescriptorType type;
+	
+	public DescriptorType getType(){
+		return type;
+	}
+	
+	public int getLength(){
+		return length;
+	}
+}

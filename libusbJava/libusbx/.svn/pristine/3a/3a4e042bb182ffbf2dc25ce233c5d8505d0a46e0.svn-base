@@ -1,0 +1,37 @@
+package ch.ntb.inf.libusbJava;
+
+import java.nio.ByteBuffer;
+
+import ch.ntb.inf.libusbJava.exceptions.LibusbException;
+
+public class Context {
+
+	private ByteBuffer context;
+	private static int nofContext = 0;
+	
+	static{
+		
+		System.loadLibrary("LibusbJava-0_7");
+	}
+	
+	public Context() throws LibusbException {
+		context = Libusb.init();
+		nofContext++;
+	}
+	
+	ByteBuffer getNativePointer(){
+		return context;
+	}
+	
+	public void finalize() throws Throwable{
+		try{
+			nofContext--;
+			if(nofContext <= 0){
+				Libusb.exit(context);
+			}
+		}
+		finally{
+			super.finalize();
+		}
+	}
+}

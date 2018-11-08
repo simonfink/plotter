@@ -1,0 +1,15 @@
+
+public class at90usb1287libusbTester {
+	
+	import ch.ntb.inf.libusb.*;
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Context ctx;
+
+	}
+
+}

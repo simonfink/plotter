@@ -1,0 +1,11 @@
+Add a new/fresh user, say user ‘test’ and password ‘test’
+
+ssh ach@172.18.252.25
+
+sudo rabbitmqctl add_user test test
+
+#Give administrative access to the new access
+sudo rabbitmqctl set_user_tags test administrator
+
+#Set permission to newly created user
+sudo rabbitmqctl set_permissions -p / test ".*" ".*" ".*"

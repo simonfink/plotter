@@ -1,0 +1,16 @@
+
+
+
+to build:
+navigate to build64 folder -> execute:
+"C:\Program Files\mingw-w64\x86_64-4.8.4-win32-seh-rt_v3-rev0\mingw64\bin\mingw32-make.exe"
+
+
+to run Use Test:
+java -Djava.library.path=C:\Users\libusb\libusbdev\libusbx\build64\LibusbJava -cp LibusbJava.jar ch.ntb.inf.libusb.test.AT90USB1287Test
+
+
+C:\Users\libusb\libusbdev\libusbx\java\src\ch\ntb\inf\libusb\test
+C:\Users\libusb\libusbdev\libusbx\build64\LibusbJava		
+	
+D:\work\libusb\libusbx\build64\LibusbJava\Debug		//orig

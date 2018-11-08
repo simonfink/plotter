@@ -1,0 +1,6 @@
+# Hashes of file build rules.
+c036bca3f429f360214f02a142c2efde LibusbJava/jni_header
+ecbdd6e1b51298623a2ce60e53216d92 java/src/CMakeFiles/LibusbJava
+6ff43e4b53e10ed21211766602f02a35 java/src/CMakeFiles/LibusbJava.dir/java_class_filelist
+c911d648d8f63db60f4a185811846f9a java/src/CMakeFiles/LibusbJava.dir/java_compiled_LibusbJava
+a905e03f63a8c4bad1c283e30bc995ac java/src/LibusbJava.jar

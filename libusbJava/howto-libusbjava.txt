@@ -1,0 +1,28 @@
+get ch_ntb_inf_libusb_Libusb.h & LibusbJava.cpp files & libusb.h 
+have libusb installed on your device ($ sudo apt-get install libusb-1.0-0-dev)
+in same folder run: g++ -shared -o libLibusbJava"-VERSION".so -fPIC LibusbJava.cpp -I"/usr/lib/jvm/java-"JAVA-VERSION"-openjdk-"ARCHITECTURE"/include" -I"/usr/lib/jvm/java-"JAVA-VERSION"-openjdk-"ARCHITECTURE"/include/linux" -lusb-1.0 -I"./" -std=c++0x
+
+open eclipse with sudo -> else no permission to access the usb device
+
+copy/move LibusbJava-1_1.so to /usr/lib
+
+
+
+
+Wireshark - Linux
+
+Capturing USB traffic on Linux is possible since Wireshark 1.2.0, libpcap 1.0.0, and Linux 2.6.11, using the Linux usbmon interface. To dump USB traffic on Linux, you need the usbmon kernel module. If it is not loaded yet, run this command as root:
+
+    modprobe usbmon 
+
+To give regular users privileges, make the usbmonX device(s) readable:
+
+    sudo setfacl -m u:$USER:r /dev/usbmon* 
+
+With Linux kernels prior to 2.6.23, you will also need to run this command as root:
+
+    mount -t debugfs none /sys/kernel/debug 
+
+and, with those kernels, the usbmon mechanism's protocol limits the total amount of data captured for each raw USB block to about 30 bytes. With a 2.6.23 or later kernel, and libpcap 1.1.0 and later, that size limitation is removed.
+
+In libpcap 1.1.0 and later, the devices on which you can capture are named usbmonX, where X is the USB bus number. On Linux 2.6.22 and later, the special "usbmon0" interface receives events from all USB buses. In libpcap 1.0.x, the devices were named usbX. 

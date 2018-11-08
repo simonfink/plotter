@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Java libusb-1.0 wrapper
+Bundle-SymbolicName: ch.ntb.inf.libusbJava
+Bundle-Version: 1.0.2
+Bundle-Vendor: libusbjava.sourceforge.net
+Require-Bundle: org.junit

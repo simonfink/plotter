@@ -1,0 +1,2 @@
+C:/Users/libusb/libusbdev/libusbx/build/java/src/CMakeFiles/LibusbJava.dir
+C:/Users/libusb/libusbdev/libusbx/build/LibusbJava/CMakeFiles/LibusbJava-1_1.dir

@@ -1,0 +1,83 @@
+package ch.ntb.inf.libusbJava;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import ch.ntb.inf.libusbJava.exceptions.*;
+
+public class DeviceDescriptor extends Descriptor{
+
+	private int nofConfigurations;
+	private List<ConfigurationDescriptor> configDesc;
+	
+	private Device device; 		//the corresponding device
+		
+	public DeviceDescriptor(Device dev){
+		this.device = dev;
+	}
+	
+	public int getVendorId(){
+		return Libusb.getVendorId(device.getNativeDevice());
+	}
+	
+	public int getProductId(){
+		return Libusb.getProductId(device.getNativeDevice());
+	}
+	
+	public int getNofConfigurations(){
+		nofConfigurations = Libusb.getNofConfigurations(device.getNativeDevice()); 
+		return nofConfigurations;
+	}
+	
+	public List<ConfigurationDescriptor> getConfigDescriptors() throws LibusbException{
+		if(configDesc == null){
+			configDesc = new ArrayList<ConfigurationDescriptor>();
+		}
+		for(int i = 0; i < getNofConfigurations(); i++){
+			if(configDesc.size()-1 < i ){
+				configDesc.add(i,  new ConfigurationDescriptor(device, i));
+//				System.out.println("Config " + i + " added.");
+			}
+			else{
+				configDesc.set(i, new ConfigurationDescriptor(device, i));
+//				System.out.println("Config " + i + " updated.");
+			}
+		}
+		return configDesc;
+	}
+	
+	public ConfigurationDescriptor getConfigDescriptor(int configValue) throws LibusbException{
+		getConfigDescriptors();
+		
+		for(int i = 0; i < configDesc.size(); i++){
+			if(configDesc.get(i).getConfigValue() == configValue){
+				return configDesc.get(i);
+			}
+		}
+		
+		throw new InvalidParameterException(); 
+	}
+	
+	public ConfigurationDescriptor getActiveConfigDescriptor() throws LibusbException{
+		if(configDesc == null){
+			configDesc = getConfigDescriptors();
+		}
+		int configValue = Libusb.getActiveConfigDescriptor(device.getNativeDevice());
+		System.out.println("ConfigValue ActiveConfigDesc: " + configValue);
+		for(int i = 0; i < configDesc.size(); i++){
+			if(configValue == configDesc.get(i).getConfigValue()){
+				System.out.println("-----------ActiveConfigDesc---------------");
+				System.out.println("Cfg found, pos: " + i + " value: " + configValue);
+				//TODO test it with Linux with more than one ConfigDescriptor
+				return configDesc.get(i);
+			}
+		}
+		throw new OtherException("No active Configuration Descriptor found.");
+	}
+	
+	public void setActiveConfigDescriptor(int nofConfig){ //TODO throws ConfigException!?
+		//TODO 
+		//entspricht libusb_set_configuration
+		//LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR_BUSY, LIBUSB_ERROR_NO_DEVICE, another LIBUSB_ERROR code on other failure
+	}
+}

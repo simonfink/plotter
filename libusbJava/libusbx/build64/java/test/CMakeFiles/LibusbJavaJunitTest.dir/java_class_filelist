@@ -1,0 +1,4 @@
+ch/ntb/inf/libusb/test/junit/mpc555Bdi/AllMpc555BdiTests.class
+ch/ntb/inf/libusb/test/junit/mpc555Bdi/DescriptorTest.class
+ch/ntb/inf/libusb/test/junit/mpc555Bdi/Mpc555BdiDeviceTest.class
+ch/ntb/inf/libusb/test/junit/Mpc555UsbBdiLibusbJavaTest.class

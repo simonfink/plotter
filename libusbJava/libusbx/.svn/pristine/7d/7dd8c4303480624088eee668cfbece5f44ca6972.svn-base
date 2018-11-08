@@ -1,0 +1,15 @@
+package ch.ntb.inf.libusbJava;
+
+import java.util.List;
+
+public class ConfigurationDescriptor extends Descriptor{
+
+	//evtl. Collection libusb_interface zuerst darüber legen und dort drin altsettings
+	//numberOfAltSettings entspricht iface.size()
+	private List<Interface> iface;
+		
+	public List<Interface> getInterface(int number){
+		return iface; //TODO
+	}
+	
+}

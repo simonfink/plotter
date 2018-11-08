@@ -1,0 +1,19 @@
+package ch.ntb.inf.libusbJava;
+
+public class EndpointDescriptor extends Descriptor{
+
+	
+	public int getMaxPacketSize(){
+		//TODO, throws LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR_OTHER
+		return 0;
+	}
+	
+	public int getMaxIsoPacketSize(){
+		//TODO, throws LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR_OTHER
+		return 0;
+	}
+	
+	public void clearHalt(){
+		//TODO throws LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR_NO_DEVICE, another LIBUSB_ERROR code on other failure
+	}
+}

@@ -1,0 +1,3 @@
+add_libusbjava_test_sources(Mpc555BdiDeviceTest.java)
+add_libusbjava_test_sources(DescriptorTest.java)
+add_libusbjava_test_sources(AllMpc555BdiTests.java)

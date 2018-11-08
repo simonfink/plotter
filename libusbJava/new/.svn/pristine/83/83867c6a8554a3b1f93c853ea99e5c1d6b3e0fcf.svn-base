@@ -1,0 +1,39 @@
+package ch.ntb.inf.libusb.test;
+
+import java.nio.ByteBuffer;
+
+import ch.ntb.inf.libusb.exceptions.LibusbException;
+
+public class LibusbJavaTest {
+
+	/**
+	 * This method does not need to be tested. This test only exists to document
+	 * the fact that this function has not been forgotten. 
+	 */
+	public void testSetDebug(){
+		
+	}
+	
+	public void testInit(){
+		System.out.println("testInit:");
+		//Test for ByteBuffer
+//		try{
+//			ByteBuffer handle = Libusb.init();
+//			System.out.println("got handle: " + handle.toString());
+//			Libusb.exit(handle);
+//		}
+//		catch(LibusbException e){
+//			System.out.println("Initialization failed: " + e.toString());
+//		}
+	}
+	
+	public static void main(String[] args){
+		LibusbJavaTest libtest = new LibusbJavaTest();
+		libtest.testInit();
+		libtest.testSetDebug();
+	}
+	
+	static{
+		System.loadLibrary("LibusbJava");
+	}
+}

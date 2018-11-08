@@ -1,0 +1,135 @@
+!SESSION 2018-10-11 10:12:46.153 -----------------------------------------------
+eclipse.buildId=debbuild
+java.fullversion=8.0.5.16 - pxa6480sr5fp16-20180524_01(SR5 FP16)
+JRE 1.8.0 Linux amd64-64-Bit Compressed References 20180523_387150 (JIT enabled, AOT enabled)
+OpenJ9   - c81abfb
+OMR      - f3f8112
+IBM      - 4f87eeb
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=de_AT
+Command-line arguments:  -data /home/simon/workspace/MA-Smartventil/java -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.equinox.p2.core 4 0 2018-10-11 10:25:07.473
+!MESSAGE Provisioning exception
+!STACK 1
+org.eclipse.equinox.p2.core.ProvisionException: No repository found at https://repo.eclipse.org/content/repositories/paho-releases/.
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.fail(AbstractRepositoryManager.java:393)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.loadRepository(AbstractRepositoryManager.java:636)
+	at org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager.loadRepository(MetadataRepositoryManager.java:96)
+	at org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager.loadRepository(MetadataRepositoryManager.java:92)
+	at org.eclipse.equinox.p2.ui.LoadMetadataRepositoryJob.doLoad(LoadMetadataRepositoryJob.java:117)
+	at org.eclipse.equinox.p2.ui.LoadMetadataRepositoryJob.runModal(LoadMetadataRepositoryJob.java:102)
+	at org.eclipse.equinox.internal.p2.ui.sdk.PreloadingRepositoryHandler$2.runModal(PreloadingRepositoryHandler.java:83)
+	at org.eclipse.equinox.p2.operations.ProvisioningJob.run(ProvisioningJob.java:177)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SUBENTRY 1 org.eclipse.equinox.p2.metadata.repository 4 1000 2018-10-11 10:25:07.473
+!MESSAGE No repository found at https://repo.eclipse.org/content/repositories/paho-releases/.
+
+!ENTRY org.eclipse.equinox.p2.core 4 0 2018-10-11 10:25:14.375
+!MESSAGE Provisioning exception
+!STACK 1
+org.eclipse.equinox.p2.core.ProvisionException: No repository found at https://repo.eclipse.org/content/repositories/paho-releases/.
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.fail(AbstractRepositoryManager.java:393)
+	at org.eclipse.equinox.internal.p2.repository.helpers.AbstractRepositoryManager.loadRepository(AbstractRepositoryManager.java:636)
+	at org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager.loadRepository(MetadataRepositoryManager.java:96)
+	at org.eclipse.equinox.internal.p2.metadata.repository.MetadataRepositoryManager.loadRepository(MetadataRepositoryManager.java:92)
+	at org.eclipse.equinox.p2.ui.LoadMetadataRepositoryJob.doLoad(LoadMetadataRepositoryJob.java:117)
+	at org.eclipse.equinox.p2.ui.LoadMetadataRepositoryJob.runModal(LoadMetadataRepositoryJob.java:102)
+	at org.eclipse.equinox.internal.p2.ui.sdk.PreloadingRepositoryHandler$2.runModal(PreloadingRepositoryHandler.java:83)
+	at org.eclipse.equinox.p2.operations.ProvisioningJob.run(ProvisioningJob.java:177)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SUBENTRY 1 org.eclipse.equinox.p2.metadata.repository 4 1000 2018-10-11 10:25:14.376
+!MESSAGE No repository found at https://repo.eclipse.org/content/repositories/paho-releases/.
+!SESSION 2018-10-11 11:26:39.601 -----------------------------------------------
+eclipse.buildId=debbuild
+java.fullversion=8.0.5.16 - pxa6480sr5fp16-20180524_01(SR5 FP16)
+JRE 1.8.0 Linux amd64-64-Bit Compressed References 20180523_387150 (JIT enabled, AOT enabled)
+OpenJ9   - c81abfb
+OMR      - f3f8112
+IBM      - 4f87eeb
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=de_AT
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY org.eclipse.ui.workbench 2 0 2018-10-11 11:31:44.457
+!MESSAGE A handler conflict occurred.  This may disable some commands.
+!SUBENTRY 1 org.eclipse.ui.workbench 2 0 2018-10-11 11:31:44.457
+!MESSAGE Conflict for 'org.eclipse.ui.edit.paste':
+HandlerActivation(commandId=org.eclipse.ui.edit.paste,
+	handler=ActionHandler(org.eclipse.ui.console.actions.TextViewerAction@b464f1e),
+	expression=AndExpression(AndExpression(org.eclipse.ui.SubActionBars$1@f85003d4,ActivePartExpression(org.eclipse.ui.internal.console.ConsoleView@8d0239e3)),WorkbenchWindowExpression(org.eclipse.ui.internal.WorkbenchWindow@f641d7dd)),sourcePriority=1064961)
+HandlerActivation(commandId=org.eclipse.ui.edit.paste,
+	handler=ActionHandler(org.eclipse.ui.console.actions.TextViewerAction@b464f1e),
+	expression=AndExpression(AndExpression(org.eclipse.ui.SubActionBars$1@f85003d4,ActivePartExpression(org.eclipse.ui.internal.console.ConsoleView@8d0239e3)),WorkbenchWindowExpression(org.eclipse.ui.internal.WorkbenchWindow@f641d7dd)),sourcePriority=1064961)
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.031
+!MESSAGE NLS unused message: TemplateEngine.internalError in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.031
+!MESSAGE NLS unused message: TemplateEngine.templateEngine in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.031
+!MESSAGE NLS unused message: ProjectCreatedActions.InsufficientInformation in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.031
+!MESSAGE NLS unused message: ConditionalProcessGroup.notExecuting in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.031
+!MESSAGE NLS unused message: ConditionalProcessGroup.unexpandableMacro in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.031
+!MESSAGE NLS unused message: Process.argument in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.031
+!MESSAGE NLS unused message: Process.expandableMacro in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.031
+!MESSAGE NLS unused message: Process.error in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.031
+!MESSAGE NLS unused message: Process.success in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.032
+!MESSAGE NLS unused message: Process.info in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.032
+!MESSAGE NLS unused message: Process.unknownProcess in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.035
+!MESSAGE NLS unused message: Process.executedSuccessfully in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.035
+!MESSAGE NLS unused message: ProcessRunner.unexpectedArguments in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.035
+!MESSAGE NLS unused message: ProcessRunner.missingArguments in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.035
+!MESSAGE NLS unused message: ProcessRunner.argumentsMismatch in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.035
+!MESSAGE NLS unused message: ProcessRunner.error in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.036
+!MESSAGE NLS unused message: ProcessRunner.success in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.036
+!MESSAGE NLS unused message: ProcessRunner.info in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.osgi 2 1 2018-10-11 12:59:25.036
+!MESSAGE NLS unused message: ProcessHelper.fileNotFound in: org.eclipse.cdt.core.templateengine.process.Messages
+
+!ENTRY org.eclipse.cdt.core.native 4 0 2018-10-11 12:59:25.377
+!MESSAGE spawner (Not found in java.library.path)
+
+!ENTRY org.eclipse.cdt.core 1 0 2018-10-11 12:59:29.225
+!MESSAGE Indexed 'rabbit-c-test' (1 sources, 104 headers) in 3,52 sec: 8.375 declarations; 14.590 references; 0 unresolved inclusions; 0 syntax errors; 2 unresolved names (0,0087 %)
+
+!ENTRY org.eclipse.ui.workbench 2 0 2018-10-11 13:11:18.125
+!MESSAGE A handler conflict occurred.  This may disable some commands.
+!SUBENTRY 1 org.eclipse.ui.workbench 2 0 2018-10-11 13:11:18.126
+!MESSAGE Conflict for 'org.eclipse.ui.file.properties':
+HandlerActivation(commandId=org.eclipse.ui.file.properties,
+	handler=ActionHandler(org.eclipse.ui.dialogs.PropertyDialogAction@140d70d7),
+	expression=AndExpression(AndExpression(org.eclipse.ui.SubActionBars$1@f85003d4,ActivePartExpression(org.eclipse.ui.navigator.resources.ProjectExplorer@b691372d)),WorkbenchWindowExpression(org.eclipse.ui.internal.WorkbenchWindow@f641d7dd)),sourcePriority=1064961)
+HandlerActivation(commandId=org.eclipse.ui.file.properties,
+	handler=ActionHandler(org.eclipse.ui.dialogs.PropertyDialogAction@16057adf),
+	expression=AndExpression(AndExpression(org.eclipse.ui.SubActionBars$1@f85003d4,ActivePartExpression(org.eclipse.ui.navigator.resources.ProjectExplorer@b691372d)),WorkbenchWindowExpression(org.eclipse.ui.internal.WorkbenchWindow@f641d7dd)),sourcePriority=1064961)

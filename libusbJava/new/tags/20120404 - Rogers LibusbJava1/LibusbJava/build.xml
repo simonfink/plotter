@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="LibusbJava" basedir=".">
+    <!-- ====================================================================== 
+
+         Build file for libusbJava Shared Library
+         
+         REQUIREMENTS:
+            g++
+            
+         http://libusbJava.sourceforge.net                                                                
+         ====================================================================== -->
+    <description>
+            Build file for libusbJava Shared Library
+    </description>
+	
+	<property file="version.properties" />
+	<property name="abi" value="0" />
+    <property name="version" value="${abi}.0.0" />
+    <property name="ver_info" value="${basedir}/out/LibusbJava.res" />
+
+    <patternset id="buildfiles">
+        <include name="**/*.o" />
+        <include name="**/*.dll" />
+        <exclude name="lib/*.dll" />
+        <include name="**/*.so.*" />
+    </patternset>
+
+    <target name="clean" description="--> Clean build files">
+        <delete>
+            <fileset dir=".">
+                <patternset refid="buildfiles" />
+            </fileset>
+        </delete>
+    </target>
+
+    <target name="linux" depends="clean" description="--> Build libusbJava-1.0.so">
+        <echo level="info" message="Building Library" />
+		<exec dir="." executable="g++">
+			<arg value="-Wno-write-strings" />
+			<arg value="-shared" />
+			<arg value="-fPIC" />
+			<arg value="-Wl,-soname,libusbJava-1.0.so" />
+			<arg value="-I/usr/lib" />
+			<arg value="-I/usr/lib/jvm/java-6-openjdk/include/" />
+            <arg value="${basedir}/LibusbJava.cpp" />
+			<arg value="-o${basedir}/out/libusbJava-1.0.so.${version}" />
+			<arg value="/usr/lib/libusb-1.0.so" />
+		</exec>
+    </target>
+    
+    <target name="Windows 32Bit" depends="clean, Windows Resource" description="--> Build LibusbJava-1_0.dll">
+        <echo level="info" message="Building Library" />
+        <exec dir="." executable="g++">
+            <arg value="-Wno-write-strings" />
+            <arg value="-D_JNI_IMPLEMENTATION_" />
+            <arg value="-Wl,--kill-at" />
+            <arg value="-mwindows" />
+            <arg value="-static" />
+            <arg value="-shared" />
+            <arg value="-IC:/Program Files/Java/jdk${java.version}/include" />
+            <arg value="-IC:/Program Files/Java/jdk${java.version}/include/win32" />
+            <arg value="-I${basedir}" />
+            <arg value="${basedir}/LibusbJava.cpp" />
+            <arg value="${ver_info}" />
+            <arg value="-o" />
+            <arg value="${basedir}/out/x86/LibusbJava-1_0.dll" />
+            <arg value="-L${basedir}/MinGW32/static" />
+            <arg value="-lusb-1.0" />
+        </exec>
+    </target>
+    
+    <target name="Windows 64Bit" depends="clean, Windows Resource" description="--> Build LibusbJava-1_0.dll">
+        <echo level="info" message="Building Library" />
+        <exec dir="." executable="g++">
+            <arg value="-Wno-write-strings" />
+            <arg value="-D_JNI_IMPLEMENTATION_" />
+            <arg value="-Wl,--kill-at" />
+            <arg value="-mwindows" />
+            <arg value="-static" />
+            <arg value="-shared" />
+            <arg value="-IC:/Program Files/Java/jdk${java.version}/include" />
+            <arg value="-IC:/Program Files/Java/jdk${java.version}/include/win32" />
+            <arg value="-I${basedir}" />
+            <arg value="${basedir}/LibusbJava.cpp" />
+            <arg value="${ver_info}" />
+            <arg value="-o" />
+            <arg value="${basedir}/out/LibusbJava-1_0.dll" />
+            <arg value="-L${basedir}/MinGW64/static" />
+            <arg value="-lusb-1.0" />
+        </exec>
+    </target>
+
+    <target name="Windows Resource" description="--> Build Version resource">
+        <property name="rc_file" value="${basedir}/out/LibusbJava.rc" />
+        <basename property="filename" file="${rc_file}"/>
+        <echo level="info" message="Generating rc-File: ${filename}" />
+        <exec dir="." executable="build_rc.cmd">
+          <arg value="${rc_file}" />
+          <arg value="${version.major}" />
+          <arg value="${version.minor}" />
+          <arg value="${version.micro}" />
+          <arg value="${version.nano}" />
+        </exec>
+        <basename property="target_file" file="${ver_info}"/>
+        <echo level="info" message="Compiling res-File: ${target_file}" />
+        <exec dir="." executable="windres">
+          <arg value="-Ocoff" />
+          <arg value="-o${ver_info}" />
+          <arg value="${rc_file}" />
+        </exec>
+    </target>
+
+	<target name="mac" depends="clean" description="--> Build LibusbJava-1.0.jnilib">
+        <exec dir="." executable="g++">
+            <arg value="-v" />
+            <arg value="-dynamiclib" />
+            <arg line="-I /System/Library/Frameworks/JavaVM.framework/Headers/" />
+            <arg value="ch_ntb_inf_libusbJava_LibusbJava.cpp" />
+            <arg line="-o LibusbJava-1_0.jnilib" />
+            <arg line="-l stdc++" />
+            <arg value="/usr/local/lib/libusb.dylib" />
+            <arg value="/usr/local/lib/libusbpp.dylib" />
+        </exec>
+    </target>
+</project>

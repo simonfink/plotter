@@ -1,0 +1,4 @@
+1425482274305	Rename local variable 'cfgNum'
+1425540463005	Rename field 'configValue'
+1425563171452	Rename field 'ifaceNum'
+1425572965104	Rename method 'getNofEndpointDescriptors'

@@ -1,0 +1,10 @@
+package ch.ntb.inf.libusb.test;
+
+public class PIC18F4550Test {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

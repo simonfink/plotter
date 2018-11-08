@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move package &apos;ch.ntb.inf.libusb.test.junit&apos; to &apos;ch.ntb.inf.libusbJava/test&apos;&#x0D;&#x0A;- Original project: &apos;ch.ntb.inf.libusbJava&apos;&#x0D;&#x0A;- Destination element: &apos;ch.ntb.inf.libusbJava/test&apos;&#x0D;&#x0A;- Original element: &apos;ch.ntb.inf.libusbJava/src/ch.ntb.inf.libusb.test.junit&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move package" destination="/test" element1="/src&lt;ch.ntb.inf.libusb.test.junit" flags="589830" fragments="1" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.movePackages" stamp="1472133649845" version="1.0"/>
+</session>

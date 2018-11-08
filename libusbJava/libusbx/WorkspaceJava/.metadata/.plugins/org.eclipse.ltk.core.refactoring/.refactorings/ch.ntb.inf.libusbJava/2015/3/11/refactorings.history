@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;cfgDesc&apos; in &apos;ch.ntb.inf.libusbJava.test.UseTestLibusbJava.main(...)&apos; to &apos;activeCfgDesc&apos;&#x0D;&#x0A;- Original project: &apos;ch.ntb.inf.libusbJava&apos;&#x0D;&#x0A;- Original element: &apos;ch.ntb.inf.libusbJava.test.UseTestLibusbJava.main(String[]).cfgDesc&apos;&#x0D;&#x0A;- Renamed element: &apos;cfgDesc&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;cfgDesc&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;ch.ntb.inf.libusbJava.test{UseTestLibusbJava.java[UseTestLibusbJava~main~\[QString;@cfgDesc!3331!3400!3355!3361!QConfigurationDescriptor;!0!false" name="activeCfgDesc" references="true" stamp="1425907580756" version="1.0"/>
+</session>

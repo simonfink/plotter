@@ -1,0 +1,22 @@
+INDEX VERSION 1.127+C:\Users\libusb\libusbdev\libusbx\WorkspaceJava\.metadata\.plugins\org.eclipse.jdt.core
+872318431.index
+1995173708.index
+1498219845.index
+1115467115.index
+3133528496.index
+1188622764.index
+1219524848.index
+3974580528.index
+1697886153.index
+4108727661.index
+163172794.index
+2232662473.index
+3065916431.index
+3816382169.index
+305854171.index
+1474708445.index
+4041092966.index
+30765161.index
+2519976100.index
+1299022128.index
+4155206848.index

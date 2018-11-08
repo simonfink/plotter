@@ -1,0 +1,111 @@
+Start testing: Aug 30 11:22 W. Europe Daylight Time
+----------------------------------------------------------
+1/2 Testing: UseTestMPC555BDI
+1/2 Test: UseTestMPC555BDI
+Command: "C:/Program Files/Java/jdk1.7.0_67/bin/java.exe" "-Djava.library.path=C:/Users/libusb/libusbdev/libusbx/build64/LibusbJava/" "-cp" "C:/Users/libusb/libusbdev/libusbx/build64/java/src/LibusbJava.jar" "ch.ntb.inf.libusb.test.UseTestLibusbJava"
+Directory: C:/Users/libusb/libusbdev/libusbx/build64
+"UseTestMPC555BDI" start time: Aug 30 11:22 W. Europe Daylight Time
+Output:
+----------------------------------------------------------
+UseTests started:
+search Device:
+1 duplicates found
+Device found with vid 0x8235, pid 0x100
+Bus: 8 Port: 4
+finished.
+Port Numbers to root: 4 
+Device Address: 0x7
+Device Speed: HIGH
+--Parent Device--
+Parent Device: vid: 0x8086, pid: 0x293c
+Bus: 8 Port: 0
+Port Numbers to root: 
+-----------------
+Config Descriptors:
+nofConfigs: 1
+Config 0: configValue: 1
+Active Descriptor of devDesc: 
+ConfigValue ActiveConfigDesc: 1
+-----------ActiveConfigDesc---------------
+Cfg found, pos: 0 value: 1
+--------Interfaces---------
+NofInterfaces device: 3
+device:
+------------
+Interface 0 nofAltSettings: 1
+Interface Number dev:0
+Alternate Setting:0
+Number of Endpoints: 2
+---Endpoints---
+Endpoint 0:
+Address: 2
+Direction: Endpoint-OUT
+MaxPacketSize: 512
+MaxIsoPacketSize: 512
+Endpoint 1:
+Address: 134
+Direction: Endpoint-IN
+MaxPacketSize: 512
+MaxIsoPacketSize: 512
+Interface 1 nofAltSettings: 1
+Interface Number dev:1
+Alternate Setting:0
+Number of Endpoints: 1
+---Endpoints---
+Endpoint 0:
+Address: 129
+Direction: Endpoint-IN
+MaxPacketSize: 8
+MaxIsoPacketSize: 8
+Interface 2 nofAltSettings: 1
+Interface Number dev:2
+Alternate Setting:0
+Number of Endpoints: 2
+---Endpoints---
+Endpoint 0:
+Address: 8
+Direction: Endpoint-OUT
+MaxPacketSize: 512
+MaxIsoPacketSize: 512
+Endpoint 1:
+Address: 132
+Direction: Endpoint-IN
+MaxPacketSize: 512
+MaxIsoPacketSize: 512
+Bulk tranfer 1 successful.
+Bulk tranfer 2 successful.
+Device closed.
+Control transfer:
+reqType DEVICE_TO_HOST (0x80): 0x80
+reqType HOST_TO_DEVICE (0x00): 0x0
+reqType VENDOR (0x40): 0x40
+reqType DEVICE_TO_HOST+VENDOR+ENDPOINT(0xC2): 0xc2
+reqType DEVICE_TO_HOST+CLASS+INTERFACE(0xA1): 0xa1
+reqType DEVICE_TO_HOST+OTHER(0x83): 0x83
+Control transfer successful, status: 01
+Control transfer successful, configuration: 1
+<end of output>
+Test time =   0.14 sec
+----------------------------------------------------------
+Test Passed.
+"UseTestMPC555BDI" end time: Aug 30 11:22 W. Europe Daylight Time
+"UseTestMPC555BDI" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/2 Testing: TestClassLoad
+2/2 Test: TestClassLoad
+Command: "C:/Program Files/Java/jdk1.7.0_67/bin/java.exe" "-Djava.library.path=C:/Users/libusb/libusbdev/libusbx/build64/LibusbJava/" "-cp" "C:/Users/libusb/libusbdev/libusbx/build64/java/src/LibusbJava.jar" "ch.ntb.inf.libusb.test.junit.Mpc555UsbBdiLibusbJavaTest"
+Directory: C:/Users/libusb/libusbdev/libusbx/build64/java/test/ch/ntb/inf/libusb/test/junit
+"TestClassLoad" start time: Aug 30 11:22 W. Europe Daylight Time
+Output:
+----------------------------------------------------------
+Error: Could not find or load main class ch.ntb.inf.libusb.test.junit.Mpc555UsbBdiLibusbJavaTest
+<end of output>
+Test time =   0.11 sec
+----------------------------------------------------------
+Test Failed.
+"TestClassLoad" end time: Aug 30 11:22 W. Europe Daylight Time
+"TestClassLoad" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Aug 30 11:22 W. Europe Daylight Time

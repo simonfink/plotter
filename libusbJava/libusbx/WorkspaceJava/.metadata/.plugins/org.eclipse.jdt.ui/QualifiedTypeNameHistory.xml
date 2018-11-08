@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusbJava.Context"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusbJava.test.LibusbJavaListTest"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusbJava.Device"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusbJava.exceptions.NoDeviceException"/>
+<fullyQualifiedTypeName name="java.lang.reflect.Method"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusbJava.DeviceDescriptor"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusbJava.ConfigurationDescriptor"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusbJava.exceptions.OtherException"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusbJava.exceptions.InvalidParameterException"/>
+<fullyQualifiedTypeName name="java.nio.ByteBuffer"/>
+<fullyQualifiedTypeName name="java.nio.ByteOrder"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusbJava.InterfaceDescriptor"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusbJava.EndpointDescriptor"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusbJava.exceptions.LibusbException"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusbJava.Interface"/>
+<fullyQualifiedTypeName name="com.sun.java.util.jar.pack.Package.Class.Field"/>
+<fullyQualifiedTypeName name="java.lang.reflect.Field"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusb.exceptions.NotSupportedException"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusb.StandardRequest"/>
+<fullyQualifiedTypeName name="java.util.EnumSet"/>
+<fullyQualifiedTypeName name="org.junit.Test"/>
+<fullyQualifiedTypeName name="org.junit.Assert"/>
+<fullyQualifiedTypeName name="org.junit.rules.ExpectedException"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusb.Speed"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusb.ConfigurationDescriptor"/>
+<fullyQualifiedTypeName name="org.junit.runner.Description"/>
+<fullyQualifiedTypeName name="org.junit.rules.TestRule"/>
+<fullyQualifiedTypeName name="org.hamcrest.Matcher"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusb.exceptions.LibusbException"/>
+<fullyQualifiedTypeName name="ch.ntb.inf.libusb.exceptions.AccessDeniedException"/>
+<fullyQualifiedTypeName name="java.security.InvalidParameterException"/>
+</qualifiedTypeNameHistroy>

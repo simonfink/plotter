@@ -1,0 +1,26 @@
+17:30:46 **** Incremental Build of configuration Debug for project testLibusb ****
+make all 
+Building file: ../src/testLibusbinterrupttransfer.cpp
+Invoking: GCC C++ Compiler
+g++ -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/testLibusbinterrupttransfer.d" -MT"src/testLibusbinterrupttransfer.d" -o "src/testLibusbinterrupttransfer.o" "../src/testLibusbinterrupttransfer.cpp"
+../src/testLibusbinterrupttransfer.cpp: In function ‘int main()’:
+../src/testLibusbinterrupttransfer.cpp:62:17: warning: unused variable ‘buffer’ [-Wunused-variable]
+  unsigned char *buffer = 0;
+                 ^
+../src/testLibusbinterrupttransfer.cpp:63:8: warning: unused variable ‘userdata’ [-Wunused-variable]
+  void* userdata;
+        ^
+../src/testLibusbinterrupttransfer.cpp: At global scope:
+../src/testLibusbinterrupttransfer.cpp:151:25: warning: ‘void isoCallback(libusb_transfer*)’ defined but not used [-Wunused-function]
+ static void LIBUSB_CALL isoCallback(struct libusb_transfer* transfer){
+                         ^
+Finished building: ../src/testLibusbinterrupttransfer.cpp
+ 
+Building target: testLibusb
+Invoking: GCC C++ Linker
+g++ -L/lib/x86_64-linux-gnu -o "testLibusb"  ./src/testLibusbinterrupttransfer.o   -lusb-1.0
+Finished building target: testLibusb
+ 
+17:30:49 **** Incremental Build of configuration Debug for project testLibusb ****
+make all 
+make: Für das Ziel „all“ ist nichts zu tun.

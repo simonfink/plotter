@@ -1,0 +1,10 @@
+Raspberry PI with Sensor Hat: login: pi/smartvalvevat
+-in ~/smartValve/workspace/rabbitmq/sender.py
+	-if Sensor Hat is available: from sense_hat import SenseHat
+	-if not you could use the sense hat emulator: from sense_emu import SenseHat //code doesn't change
+	-to get the mqtt service import pika
+	-to get a timestamp import time
+	
+	-create credentials to get authorized on the rabbitmq-server
+		-pika.PlainCredentials('raspberrypi', 'pi') //username, password, also create this user on the rabbitmq server
+	-create a BlockingConnection to the rabbitmq-server ('ip', port, '/', credentials)

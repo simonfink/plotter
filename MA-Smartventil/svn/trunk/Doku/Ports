@@ -1,0 +1,3 @@
+RabbitMQ - amqp - 5672
+RabbitMQ - mqtt - 1883
+RabbitMQ - web UI - 15672

@@ -1,0 +1,44 @@
+package ch.ntb.inf.libusbJava;
+
+import java.nio.ByteBuffer;
+import java.util.List;
+
+public class DeviceDescriptor extends Descriptor{
+
+	private List<ConfigurationDescriptor> configDesc;
+	private ByteBuffer nativeDevDesc;
+		
+	public DeviceDescriptor(){
+		//TODO
+	}
+
+	public DeviceDescriptor(ByteBuffer nativeDeviceDesc){
+		this.nativeDevDesc = nativeDeviceDesc;
+	}
+	
+	public int getVendorId(){
+		return Libusb.getVendorId(nativeDevDesc);
+	}
+	
+	public int getProductId(){
+		return Libusb.getProductId(nativeDevDesc);
+	}
+	
+	public List<ConfigurationDescriptor> getConfigDescriptors(){
+		return configDesc;
+	}
+	
+	public ConfigurationDescriptor getActiveConfigDescriptor(){ //TODO throws ConfigException!?
+		//LIBUSB_ERROR_NO_DEVICE if device disconnected, or another LIBUSB_ERROR code on other failure
+		//evtl. parameter device_handle -> Aufruf von Device Ebene aus -> dort hat man Handle -> Übergabewert
+		//find out active configuration via libusb_get_configuration with Device handle -> get bConfigurationValue of activeConfiguration
+		return null; //TODO select active Configuration out of the List
+		//entspricht libusb_get_configuration
+	}
+	
+	public void setActiveConfigDescriptor(int nofConfig){ //TODO throws ConfigException!?
+		//TODO 
+		//entspricht libusb_set_configuration
+		//LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR_BUSY, LIBUSB_ERROR_NO_DEVICE, another LIBUSB_ERROR code on other failure
+	}
+}

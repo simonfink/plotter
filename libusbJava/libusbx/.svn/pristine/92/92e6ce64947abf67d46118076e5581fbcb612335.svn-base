@@ -1,0 +1,310 @@
+package ch.ntb.inf.libusbJava;
+
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
+
+import ch.ntb.inf.libusbJava.exceptions.*;
+import ch.ntb.inf.libusbJava.test.LibusbJavaListTest;
+
+public class Device {
+
+	private static final boolean dbg = true;
+	private static final boolean testing = false;
+	
+	private DeviceDescriptor devDesc;
+	private static int nofDevices = 0;
+	private static List<Device> devList;
+	private static boolean deviceListValid = false;
+	
+	private Context ctx;
+	
+	private ByteBuffer nativeDevice;
+	private ByteBuffer nativeHandle;
+	
+	//parameters of last open
+	private int cfgIndex = -1;
+	private int ifaceIndex = -1; 
+	private int altSettingIndex = -1;
+	
+//	private Device parent;
+	static{
+		devList = new ArrayList<Device>();
+	}
+	
+	public Device(Context ctx, ByteBuffer nativeDevice) { // TODO protected or not???
+		this.ctx = ctx;
+		this.nativeDevice = nativeDevice;
+		nofDevices++;
+	}
+	
+	//TODO this has limitations, if you have more than one device with the same vid, pid you get just the first in the list
+	// probably extend, that you see how many devices with this vid, pid are available and choose one then
+	public static Device search(Context ctx, int vid, int pid) throws LibusbException{
+		getList(ctx);
+		for(int i = 0; i < devList.size(); i++){
+//			if(dbg){
+//				System.out.println("Dev" + i + ":");
+//				System.out.println("vid: " + devList.get(i).getDeviceDescriptor().getVendorId());
+//			}
+			if(vid == devList.get(i).getDeviceDescriptor().getVendorId()){
+//				if(dbg){
+//					System.out.println("pid: " + devList.get(i).getDeviceDescriptor().getProductId());
+//				}
+				if(pid == devList.get(i).getDeviceDescriptor().getProductId()){
+					return devList.get(i);
+				}
+			}
+		}
+		throw new NoDeviceException();
+	}
+	
+	public static Device get(Context ctx, int vid, int pid) {
+		// TODO
+		// protect this devices
+		return null;
+	}
+	
+	private static void getList(Context ctx) throws LibusbException {
+		List<ByteBuffer> nativeList;
+		if(testing){
+			nativeList = LibusbJavaListTest.getDeviceList(ctx.getNativePointer());
+		}
+		else{
+			nativeList = Libusb.getDeviceList(ctx.getNativePointer());
+		}
+
+		System.out.println("size: " + nativeList.size());
+		if(devList.size() > 0){ 	//refresh
+			boolean devInList = false;
+			
+			//check if device already in the List or if one got cleared out
+			for(int i = 0; i < devList.size(); i++){
+				devInList = false;
+				for(int j = 0; j < nativeList.size() && !devInList; j++){
+					if(devList.get(i).getNativeDevice() == nativeList.get(j)){
+						//device found
+						devInList = true;
+						if(i != j){
+							//list changed
+							devList.add(i+1, devList.get(i));
+							devList.remove(i);
+							devList.add(i, new Device(ctx, nativeList.get(i)));
+						}
+					}
+				}
+				if(!devInList){
+					devList.remove(i);		//element at position i is not in native List anymore -> remove
+					i--;					//make sure that new element i will be checked
+					
+//					if(devList.size() > nativeList.size()){
+//					//TODO FIX IT?!: not just if devList is bigger, also possible, that one got out of list and one got added, so size would be equal!!!
+//						//device not found in new nativeList -> remove
+//						System.out.print("J: dev remove from list:");
+//						System.out.println(Integer.toHexString(devList.get(i).getNativeDevice().getInt(0)));
+//						devList.remove(i);
+//						i--; // list  will get shorter by one element, make sure, that new i element will also be checked!
+//					}
+//					else{
+//						devList.add(i, new Device(ctx, nativeList.get(i)));
+//					}
+				}
+			}
+			if(devList.size() < nativeList.size()){
+				//add new devices at the end
+				for(int i = devList.size(); i < nativeList.size(); i++){
+					devList.add(i, new Device(ctx, nativeList.get(i)));
+				}
+			}
+		}
+		else{
+			for(int i = 0; i < nativeList.size(); i++){
+				devList.add(new Device(ctx, nativeList.get(i)));
+			}
+		}
+		deviceListValid = true;
+	}
+	
+	public static void freeList(Context ctx, boolean unrefDev) throws LibusbException {
+		if(deviceListValid){
+			if(ctx.getNativePointer() == devList.get(0).getContext().getNativePointer()){
+				Libusb.freeDeviceList(unrefDev);
+				deviceListValid = false;
+				if(dbg) System.out.println("Device List freed.");				
+			}
+			else{
+				throw new WrongContextException();
+			}
+		}
+		else{
+			throw new DeviceListNotValidException();
+		}
+	}
+		
+	//gives bus number where device is attached
+	public int getBusNumber(){
+		return Libusb.getBusNumber(nativeDevice);
+	}
+	
+	//gives port number where device is attached
+	public int getPortNumber(){
+		return Libusb.getPortNumber(nativeDevice);
+	}
+	
+	//gives all port numbers from device to root
+	public int getPortNumbers(int[] portNumbers) throws LibusbException {
+		return Libusb.getPortNumbers(ctx.getNativePointer(), nativeDevice, portNumbers);
+	}
+	
+	public Device getParent() throws LibusbException{
+		// only valid as long as device_list is not freed in native code with libusb_free_device_list
+		if(!deviceListValid){
+			throw new DeviceListNotValidException();
+		}
+		ByteBuffer nativeParent = Libusb.getParent(nativeDevice);
+		if(nativeParent == null){
+			return null;			//no parent available
+		}
+		for(int i = 0; i < devList.size(); i++){
+			if(nativeParent == devList.get(i).nativeDevice){
+				return devList.get(i);
+			}
+		}
+		return new Device(ctx, nativeParent);
+	}
+	
+	public int getDeviceAddress(){
+		return Libusb.getDeviceAddress(nativeDevice);
+	}
+	
+	public Speed getDeviceSpeed(){
+		return Speed.valueOf(Libusb.getDeviceSpeed(nativeDevice));
+	}
+	
+//	public void refDevice(){
+//		//TODO increment the reference count of a device
+//	}
+//	
+//	public void unrefDevice(){
+//		//TODO decrement the reference count of a device, if the decrement operation causes the reference count to reach zero, the device shall be destroyed.
+//	}
+	
+	public void open() throws LibusbException{
+		nativeHandle = Libusb.open(nativeDevice);
+		//TODO think about freeing: is a bit delicate because, if using Java Objects with dev Pointer in it, could go wrong if using underlaying infos, so don't free it automatically
+//		if(nativeHandle != null){ 	//error occured during open, so we probably need Device List again
+//			freeList(ctx, true);	//otherwise: clean up Device List
+//		}
+	}
+	
+	public void open(ConfigurationDescriptor cfgDesc, Interface iface, InterfaceDescriptor altSetting, EndpointDescriptor epDesc) throws LibusbException{
+		//TODO
+	}
+	
+	public void open(int cfgIndex, int ifaceIndex, int altSettingIndex) throws LibusbException{
+		//open device
+		nativeHandle = Libusb.open(nativeDevice);
+		//claim interface
+		int ifaceNum;
+		if(altSettingIndex < 0){
+			ifaceNum = devDesc.getConfigDescriptors().get(cfgIndex-1).getInterface(ifaceIndex).getAlternateSettings().get(0).getInterfaceNumber();
+			int retVal = Libusb.claimInterface(nativeHandle, ifaceNum);	//Exception already thrown from JNI if something went wrong
+			if(retVal != 0){
+				System.out.println("Cannot claim interface " + ifaceNum + ".");
+			}
+			else{
+				System.out.println("Interface successful claimed.");
+			}
+			this.cfgIndex = cfgIndex;
+			this.ifaceIndex = ifaceIndex;
+			this.altSettingIndex = altSettingIndex;
+		}
+		else{
+			//TODO set altinterface
+		}
+		
+	}
+	
+	public void close(){
+		Libusb.close(nativeHandle);
+		nativeHandle = null; 		//destroy handle in Java too
+	}
+	
+	public boolean isOpen(){
+		if(nativeHandle == null){
+			return false;
+		}
+		return true;
+	}
+	
+//	//TODO getDevice
+//	public Device getDevice(){
+//		//TODO
+//		return null;
+//	}
+	
+	public DeviceDescriptor getDeviceDescriptor() throws LibusbException{
+		devDesc = new DeviceDescriptor(this);
+		return devDesc;
+	}
+	
+	public void reset() throws LibusbException{
+		int retVal = Libusb.resetDevice(nativeHandle);
+		if(retVal < 0){		//try to reopen
+			if(cfgIndex >= 0 && ifaceIndex >= 0){	//values were set once (open already once called)
+				open(cfgIndex, ifaceIndex, altSettingIndex);	//try to reopen
+			}
+		}
+	}
+	
+	public int controlTransfer(){
+		//TODO throw LIBUSB_ERROR_TIMEOUT, LIBUSB_ERROR_PIPE, LIBUSB_ERROR_NO_DEVICE, another LIBUSB_ERROR
+		return 0;
+	}
+		
+	/**
+	 * 
+	 * @param endpoint
+	 * @param data
+	 * @param length
+	 * @param timeout
+	 * @return	number of transfered bytes
+	 * @throws LibusbException
+	 */
+	public int bulkTransfer(int endpoint, byte[] data, int length, int timeout) throws LibusbException{
+		if(length > data.length){
+			throw new InvalidParameterException(); 
+		}
+		int retVal = Libusb.bulkTransfer(nativeHandle, endpoint, data, length, timeout); //exceptions will be thrown in JNI
+		return retVal;	//think about if Error Handling sufficient
+	}
+	
+	public int readBulk(int endpoint, byte[] data, int length, int timeout) throws LibusbException{
+		return bulkTransfer( (endpoint|0x80), data, length, timeout);
+	}
+	
+	public int writeBulk(int endpoint, byte[] data, int length, int timeout) throws LibusbException{
+		return bulkTransfer( (endpoint&(~0x80)), data, length, timeout);
+	}
+	
+	public void interruptTransfer(){
+		//TODO throw LIBUSB_ERROR_TIMEOUT, LIBUSB_ERROR_PIPE, LIBUSB_ERROR_OVERFLOW, LIBUSB_ERROR_NO_DEVICE, another LIBUSB_ERROR
+	}
+	
+	protected void finalize(){
+		Libusb.unrefDevice(nativeDevice);
+		nofDevices--;
+	}
+	
+	public static int getNofDevices(){
+		return nofDevices;
+	}
+	
+	public Context getContext(){
+		return ctx;
+	}
+	
+	public ByteBuffer getNativeDevice(){
+		return nativeDevice;
+	}
+}

@@ -1,0 +1,8 @@
+1427100584127	Rename local variable 'configValue'
+1427203569947	Rename local variable 'cfgIndex'
+1427203680962	Rename field 'cfgIndex'
+1427203691594	Rename field 'ifaceIndex'
+1427203725363	Rename field 'altSettingIndex'
+1427203737286	Rename local variable 'altSettingIndex'
+1427381399183	Rename method 'getProductNumIndex'
+1427381410049	Rename method 'getManufacturerIndex'

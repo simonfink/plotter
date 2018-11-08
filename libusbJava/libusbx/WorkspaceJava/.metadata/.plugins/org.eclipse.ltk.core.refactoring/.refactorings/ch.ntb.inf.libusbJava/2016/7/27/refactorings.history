@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;nofDev&apos; in &apos;ch.ntb.inf.libusb.Device.search(...)&apos; to &apos;nofDuplicates&apos;&#x0D;&#x0A;- Original project: &apos;ch.ntb.inf.libusbJava&apos;&#x0D;&#x0A;- Original element: &apos;ch.ntb.inf.libusb.Device.search(Context, int, int, int).nofDev&apos;&#x0D;&#x0A;- Renamed element: &apos;nofDev&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;nofDev&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;ch.ntb.inf.libusb{Device.java[Device~search~QContext;~I~I~I@nofDev!1992!2001!1996!2001!I!0!true" name="nofDuplicates" references="true" stamp="1467897766821" version="1.0"/>
+</session>

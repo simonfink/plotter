@@ -1,0 +1,1 @@
+add_libusbjava_test_sources(LibusbJavaListTest.java)

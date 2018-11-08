@@ -1,0 +1,25 @@
+cmake_minimum_required (VERSION 2.8)
+
+project (LibusbJavaWrapper)
+
+find_package(Java REQUIRED)
+find_package(JNI REQUIRED)
+include(UseJava)
+
+enable_testing()
+
+add_subdirectory(java)
+
+# generate Libusb.h stub
+set (_LIBUSBJAVA_CPP_LOCATION "${PROJECT_SOURCE_DIR}/LibusbJava")
+set (_javaClassDir "${PROJECT_SOURCE_DIR}/java/bin")
+message("JavaClassDirectory: ${_javaClassDir}")
+
+add_subdirectory(LibusbJava)
+
+# add test to run JNIFoo
+message("Location jar: ${_jarFile}")
+add_test(NAME LibusbJavaTest
+    COMMAND ${Java_JAVA_EXECUTABLE}
+    -Djava.library.path="${PROJECT_BINARY_DIR}/LibusbJava/Debug"
+    -cp "${_jarFile}" ch.ntb.inf.libusbJava.test.LibusbJavaTest)#"${CMAKE_CURRENT_BINARY_DIR}/JNIFoo")

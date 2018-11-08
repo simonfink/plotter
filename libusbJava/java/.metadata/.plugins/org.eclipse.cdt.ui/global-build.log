@@ -1,0 +1,201 @@
+15:06:46 **** Build of configuration Release for project LibusbJava ****
+make all 
+Building file: ../objects/Usb_Device.cpp
+Invoking: GCC C++ Compiler
+g++ -I/usr/lib/jvm/java-9-openjdk-amd64/include -I/usr/lib/jvm/java-9-openjdk-amd64/include/linux -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"objects/Usb_Device.d" -MT"objects/Usb_Device.d" -o "objects/Usb_Device.o" "../objects/Usb_Device.cpp"
+Finished building: ../objects/Usb_Device.cpp
+ 
+Building file: ../LibusbJava.cpp
+Invoking: GCC C++ Compiler
+g++ -I/usr/lib/jvm/java-9-openjdk-amd64/include -I/usr/lib/jvm/java-9-openjdk-amd64/include/linux -O3 -Wall -c -fmessage-length=0 -MMD -MP -MF"LibusbJava.d" -MT"LibusbJava.d" -o "LibusbJava.o" "../LibusbJava.cpp"
+../LibusbJava.cpp:95:2: warning: identifier ‘nullptr’ is a keyword in C++11 [-Wc++0x-compat]
+  libusb_context* context = nullptr;
+  ^
+../LibusbJava.cpp: In function ‘void Java_ch_ntb_inf_libusb_Libusb_setDebug(JNIEnv*, jclass, jobject, jint)’:
+../LibusbJava.cpp:95:28: error: ‘nullptr’ was not declared in this scope
+  libusb_context* context = nullptr;
+                            ^
+../LibusbJava.cpp: In function ‘_jobject* Java_ch_ntb_inf_libusb_Libusb_init(JNIEnv*, jclass)’:
+../LibusbJava.cpp:110:28: error: ‘nullptr’ was not declared in this scope
+  libusb_context* context = nullptr;
+                            ^
+../LibusbJava.cpp: In function ‘void Java_ch_ntb_inf_libusb_Libusb_exit(JNIEnv*, jclass, jobject)’:
+../LibusbJava.cpp:138:28: error: ‘nullptr’ was not declared in this scope
+  libusb_context* context = nullptr;
+                            ^
+../LibusbJava.cpp: In function ‘_jobject* Java_ch_ntb_inf_libusb_Libusb_getDeviceList(JNIEnv*, jclass, jobject)’:
+../LibusbJava.cpp:159:28: error: ‘nullptr’ was not declared in this scope
+  libusb_context* context = nullptr;
+                            ^
+../LibusbJava.cpp:225:2: warning: label ‘no_dev_class’ defined but not used [-Wunused-label]
+  no_dev_class:
+  ^
+../LibusbJava.cpp: In function ‘void Java_ch_ntb_inf_libusb_Libusb_freeDeviceList(JNIEnv*, jclass, jboolean)’:
+../LibusbJava.cpp:247:7: warning: unused variable ‘unrefDevices’ [-Wunused-variable]
+   int unrefDevices = 1;
+       ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getBusNumber(JNIEnv*, jclass, jobject)’:
+../LibusbJava.cpp:261:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device* dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getPortNumber(JNIEnv*, jclass, jobject)’:
+../LibusbJava.cpp:279:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device* dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getPortNumbers(JNIEnv*, jclass, jobject, jobject, jintArray)’:
+../LibusbJava.cpp:308:28: error: ‘nullptr’ was not declared in this scope
+  libusb_context *context = nullptr;
+                            ^
+../LibusbJava.cpp: In function ‘_jobject* Java_ch_ntb_inf_libusb_Libusb_getParent(JNIEnv*, jclass, jobject)’:
+../LibusbJava.cpp:334:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘_jobject* Java_ch_ntb_inf_libusb_Libusb_open(JNIEnv*, jclass, jobject)’:
+../LibusbJava.cpp:460:10: error: ‘nullptr’ was not declared in this scope
+   return nullptr;
+          ^
+../LibusbJava.cpp:463:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘void Java_ch_ntb_inf_libusb_Libusb_close(JNIEnv*, jclass, jobject)’:
+../LibusbJava.cpp:486:33: error: ‘nullptr’ was not declared in this scope
+  libusb_device_handle *handle = nullptr;
+                                 ^
+../LibusbJava.cpp:493:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  for(int i = 0; i < devHandleVector.size(); i++){
+                   ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getDeviceAddress(JNIEnv*, jclass, jobject)’:
+../LibusbJava.cpp:509:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getDeviceSpeed(JNIEnv*, jclass, jobject)’:
+../LibusbJava.cpp:526:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getActiveConfigDescriptor(JNIEnv*, jclass, jobject)’:
+../LibusbJava.cpp:543:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getConfigValue(JNIEnv*, jclass, jobject, jint)’:
+../LibusbJava.cpp:580:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getNofInterfaces(JNIEnv*, jclass, jobject, jint)’:
+../LibusbJava.cpp:609:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getNofAltSettings(JNIEnv*, jclass, jobject, jint)’:
+../LibusbJava.cpp:638:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getInterfaceNumber(JNIEnv*, jclass, jobject, jint, jint, jint)’:
+../LibusbJava.cpp:667:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getAlternateSetting(JNIEnv*, jclass, jobject, jint, jint, jint)’:
+../LibusbJava.cpp:699:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getNofEndpoints(JNIEnv*, jclass, jobject, jint, jint, jint)’:
+../LibusbJava.cpp:732:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getEndpointAddress(JNIEnv*, jclass, jobject, jint, jint, jint, jint)’:
+../LibusbJava.cpp:765:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getMaxPacketSize(JNIEnv*, jclass, jobject, jint, jint, jint, jint)’:
+../LibusbJava.cpp:797:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getMaxIsoPacketSize(JNIEnv*, jclass, jobject, jint, jint, jint, jint)’:
+../LibusbJava.cpp:831:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘void Java_ch_ntb_inf_libusb_Libusb_claimInterface(JNIEnv*, jclass, jobject, jint)’:
+../LibusbJava.cpp:867:36: error: ‘nullptr’ was not declared in this scope
+  libusb_device_handle *devHandle = nullptr;
+                                    ^
+../LibusbJava.cpp:870:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  for(int i = 0; i < devHandleVector.size(); i++){
+                   ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_resetDevice(JNIEnv*, jclass, jobject)’:
+../LibusbJava.cpp:894:36: error: ‘nullptr’ was not declared in this scope
+  libusb_device_handle *devHandle = nullptr;
+                                    ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_getTransferType(JNIEnv*, jclass, jobject, jint, jint, jint, jint)’:
+../LibusbJava.cpp:915:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp: In function ‘_jstring* Java_ch_ntb_inf_libusb_Libusb_getStringDescriptor(JNIEnv*, jclass, jobject, jint, jint)’:
+../LibusbJava.cpp:975:10: error: ‘nullptr’ was not declared in this scope
+   return nullptr;
+          ^
+../LibusbJava.cpp:984:6: warning: unused variable ‘cnt’ [-Wunused-variable]
+  int cnt = 0;
+      ^
+../LibusbJava.cpp: In function ‘_jstring* Java_ch_ntb_inf_libusb_Libusb_getStringDescriptorAscii(JNIEnv*, jclass, jobject, jint)’:
+../LibusbJava.cpp:1001:10: error: ‘nullptr’ was not declared in this scope
+   return nullptr;
+          ^
+../LibusbJava.cpp:1007:6: warning: unused variable ‘cnt’ [-Wunused-variable]
+  int cnt =  libusb_get_string_descriptor_ascii(devHandle, static_cast<uint8_t>(descIndex), data, 50);
+      ^
+../LibusbJava.cpp: In function ‘void Java_ch_ntb_inf_libusb_Libusb_relaseInterface(JNIEnv*, jclass, jobject, jint)’:
+../LibusbJava.cpp:1069:36: error: ‘nullptr’ was not declared in this scope
+  libusb_device_handle *devHandle = nullptr;
+                                    ^
+../LibusbJava.cpp:1072:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  for(int i = 0; i < devHandleVector.size(); i++){
+                   ^
+../LibusbJava.cpp: In function ‘void Java_ch_ntb_inf_libusb_Libusb_setInterfaceAltSetting(JNIEnv*, jclass, jobject, jint, jint)’:
+../LibusbJava.cpp:1095:36: error: ‘nullptr’ was not declared in this scope
+  libusb_device_handle *devHandle = nullptr;
+                                    ^
+../LibusbJava.cpp:1098:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  for(int i = 0; i < devHandleVector.size(); i++){
+                   ^
+../LibusbJava.cpp: In function ‘_jobject* Java_ch_ntb_inf_libusb_Libusb_openVidPid(JNIEnv*, jclass, jobject, jint, jint)’:
+../LibusbJava.cpp:1118:12: error: ‘nullptr’ was not declared in this scope
+  if(ctx == nullptr){
+            ^
+../LibusbJava.cpp:1129:18: error: ‘nullptr’ was not declared in this scope
+  if(devHandle == nullptr){
+                  ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_controlTransfer(JNIEnv*, jclass, jobject, jbyte, jbyte, jshort, jshort, jbyteArray, jint, jint)’:
+../LibusbJava.cpp:1152:36: error: ‘nullptr’ was not declared in this scope
+  libusb_device_handle *devHandle = nullptr;
+                                    ^
+../LibusbJava.cpp:1155:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  for(int i = 0; i < devHandleVector.size(); i++){
+                   ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_bulkTransfer(JNIEnv*, jclass, jobject, jint, jbyteArray, jint, jint)’:
+../LibusbJava.cpp:1186:36: error: ‘nullptr’ was not declared in this scope
+  libusb_device_handle *devHandle = nullptr;
+                                    ^
+../LibusbJava.cpp:1189:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  for(int i = 0; i < devHandleVector.size(); i++){
+                   ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_interruptTransfer(JNIEnv*, jclass, jobject, jint, jbyteArray, jint, jint)’:
+../LibusbJava.cpp:1224:37: error: ‘nullptr’ was not declared in this scope
+   libusb_device_handle *devHandle = nullptr;
+                                     ^
+../LibusbJava.cpp:1227:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   for(int i = 0; i < devHandleVector.size(); i++){
+                    ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_isochronousTransfer(JNIEnv*, jclass, jobject, jint, jint, jbyteArray, jint, jint)’:
+../LibusbJava.cpp:1261:23: error: ‘nullptr’ was not declared in this scope
+  libusb_device *dev = nullptr;
+                       ^
+../LibusbJava.cpp:1274:19: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+  for(int i = 0; i < devHandleVector.size(); i++){
+                   ^
+../LibusbJava.cpp: In function ‘jint Java_ch_ntb_inf_libusb_Libusb_bulkStreamTransfer(JNIEnv*, jclass, jobject, jbyteArray, jbyte, jbyteArray, jint, jint)’:
+../LibusbJava.cpp:1320:37: error: ‘nullptr’ was not declared in this scope
+   libusb_device_handle *devHandle = nullptr;
+                                     ^
+../LibusbJava.cpp:1332:20: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   for(int i = 0; i < devHandleVector.size(); i++){
+                    ^
+make: *** [LibusbJava.o] Fehler 1
+subdir.mk:18: die Regel für Ziel „LibusbJava.o“ scheiterte

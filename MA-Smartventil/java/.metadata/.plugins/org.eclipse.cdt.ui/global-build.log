@@ -1,0 +1,4 @@
+13:13:31 **** Clean-only build of configuration Debug for project rabbit-c-test ****
+make clean 
+rm -rf  ./src/rabbit-c-test.o ./src/utils.o  ./src/rabbit-c-test.d  ./src/utils.d  rabbit-c-test
+ 

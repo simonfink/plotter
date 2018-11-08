@@ -1,0 +1,57 @@
+package ch.ntb.inf.libusbJava;
+
+import java.nio.ByteBuffer;
+import java.util.List;
+
+public class Interface {
+	//contains one Interface with alternate settings
+	private List<InterfaceDescriptor> altSettings;
+	private int nofAltSettings;
+	private ByteBuffer nativeInterface;
+	
+	public Interface(ByteBuffer nativeInterface){
+		this.nativeInterface = nativeInterface;
+	}
+	
+	public List<InterfaceDescriptor> getAlternateSettings(){
+		return altSettings; //TODO
+	}
+	
+	public int getNumberOfAlternateSettings(){
+		return altSettings.size(); //TODO think about: probably get from native, if List of alternateSettings is not filled or complete!
+	}
+	
+	public boolean kernelDriverActive(int interfaceNumber){
+		return false; //TODO throws error, true if kernelDriverActive, false else 
+		//LIBUSB_ERROR_NO_DEVICE, LIBUSB_ERROR_NOT_SUPPORTED, another LIBUSB_ERROR on other failure
+	}
+	
+	public void detachKernelDriver(int interfaceNumber){
+		//TODO throws LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR_INVALID_PARAM, LIBUSB_ERROR_NO_DEVICE, LIBUSB_ERROR_NOT_SUPPORTED, another LIBUSB_ERROR code
+	}
+	
+	public void attachKernelDriver(int interfaceNumber){
+		//TODO throws LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR_INVALID_PARAM, LIBUSB_ERROR_NO_DEVICE, LIBUSB_ERROR_NOT_SUPPORTED, LIBUSB_ERROR_BUSY, another LIBUSB_ERROR on other fail
+	}
+	
+	public void setAutoDetachKernelDriver(boolean enable){
+		//TODO
+		// throws LIBUSB_ERROR_NOT_SUPPORTED on platforms without this functionality, LIBUSB_SUCCESS on success
+	}
+	
+	public void claimInterface(int interfaceNumber){
+		//TODO inkl. throws, falls claim nicht möglich
+		// zu überlegen, wie es sich für User anfühlen soll
+		//LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR_BUSY, LIBUSB_ERROR_NO_DEVICE, LIBUSB_ERROR code on other failure
+	}
+	
+	public void releaseInterface(){
+		//TODO throws if fail
+		//LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR_NO_DEVICE, LIBUSB_ERROR code on other failure
+	}
+	
+	public void setAltSetting(int interfaceNumber, int alternateSetting){
+		//TODO throws if fail
+		//LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR_NO_DEVICE, another LIBUSB_ERROR code on other failure
+	}
+}

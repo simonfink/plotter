@@ -1,0 +1,7 @@
+14:50:28 **** Clean-only build of configuration Debug for project LibusbJava ****
+make clean 
+rm -rf  ./LibusbJava.o  ./LibusbJava.d  libLibusbJava.so
+ 
+
+14:50:28 Build Finished (took 53ms)
+

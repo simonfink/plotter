@@ -1,0 +1,52 @@
+package ch.ntb.inf.libusbJava;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import ch.ntb.inf.libusbJava.exceptions.LibusbException;
+
+public class InterfaceDescriptor extends Descriptor{
+
+	private List<EndpointDescriptor> endpointDesc;
+	
+	private Device device;
+	private int configIndex;
+	private int ifaceIndex;
+	private int altSetting;
+	
+	public InterfaceDescriptor(Device device, int configIndex, int ifaceIndex, int altSetting){
+		this.device = device;
+		this.configIndex = configIndex;
+		this.ifaceIndex = ifaceIndex;
+		this.altSetting = altSetting;
+	}
+	
+	public List<EndpointDescriptor> getEndpointDescriptors() throws LibusbException{
+		if(endpointDesc == null){
+			endpointDesc = new ArrayList<EndpointDescriptor>();
+		}
+		for(int i = 0; i < getNumberOfEndpoints(); i++){
+			if(endpointDesc.size() - 1 < i){
+				endpointDesc.add(i, new EndpointDescriptor(device, configIndex, ifaceIndex, altSetting, i));
+			}
+			else{
+				endpointDesc.set(i, new EndpointDescriptor(device, configIndex, ifaceIndex, altSetting, i));
+			}
+			
+		}
+		
+		return endpointDesc;
+	}
+	
+	public int getNumberOfEndpoints() throws LibusbException{
+		return Libusb.getNofEndpoints(device.getNativeDevice(), configIndex, ifaceIndex, altSetting);
+	}
+	
+	public int getInterfaceNumber() throws LibusbException{
+		return Libusb.getInterfaceNumber(device.getNativeDevice(), configIndex, ifaceIndex, altSetting);		
+	}
+	
+	public int getAlternateSetting() throws LibusbException{
+		return Libusb.getAlternateSetting(device.getNativeDevice(), configIndex, ifaceIndex, altSetting);
+	}
+}

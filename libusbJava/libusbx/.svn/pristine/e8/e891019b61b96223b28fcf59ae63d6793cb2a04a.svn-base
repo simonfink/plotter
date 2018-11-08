@@ -1,0 +1,56 @@
+package ch.ntb.inf.libusbJava;
+
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
+
+import ch.ntb.inf.libusbJava.exceptions.InvalidParameterException;
+import ch.ntb.inf.libusbJava.exceptions.LibusbException;
+
+public class ConfigurationDescriptor extends Descriptor{
+	
+	//evtl. Collection libusb_interface zuerst darüber legen und dort drin altsettings
+	//numberOfAltSettings entspricht iface.size()
+	private List<Interface> iface;
+	private int nofInterfaces;
+	private ByteBuffer nativeConfigDesc;
+	
+	private Device device;
+		
+	public ConfigurationDescriptor(ByteBuffer nativeConfigDesc, Device dev){
+		this.nativeConfigDesc = nativeConfigDesc;
+		this.device = dev;
+	}
+	
+	public int getNofInterfaces(){
+		nofInterfaces = Libusb.getNofInterfaces(nativeConfigDesc);
+		return nofInterfaces;
+	}
+	
+	public Interface getInterface(int number) throws LibusbException{
+		if(number > getNofInterfaces()){
+			throw new InvalidParameterException();
+		}
+		getAllInterfaces();
+		return iface.get(number);
+	}
+	
+	public List<Interface> getAllInterfaces(){
+		if(iface == null){
+			iface = new ArrayList<Interface>();
+		}
+		for(int i = 0; i < getNofInterfaces(); i++){
+			iface.add(new Interface(Libusb.getInterface(nativeConfigDesc, i))); //TODO what needs a interface!? native device necessary?
+		}
+		//TODO
+		return iface; //TODO
+	}
+	
+	public ByteBuffer getNativeConfigDesc(){
+		return nativeConfigDesc;
+	}
+	
+	public int getConfigValue(){
+		return Libusb.getConfigValue(device.getNativeDevice());
+	}
+}

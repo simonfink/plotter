@@ -1,0 +1,41 @@
+package ch.ntb.inf.libusbJava.test;
+
+import java.nio.ByteBuffer;
+import java.util.List;
+
+import ch.ntb.inf.libusbJava.Context;
+import ch.ntb.inf.libusbJava.Device;
+import ch.ntb.inf.libusbJava.exceptions.LibusbException;
+
+public class LibusbJavaListTest{
+	
+	List<ByteBuffer> nativeList;
+	List<Device> deviceList;
+	
+	public static void main(String[] args){
+		Context testCtx = null;
+		try {
+			testCtx = new Context();
+		} catch (LibusbException e) {
+			System.out.println("Context init failed");
+			e.printStackTrace();
+		}
+		System.out.println("Successful init");
+		try {
+			Device.search(testCtx, 0x8235, 0x100);
+		} catch (LibusbException e) {
+			System.out.println("search failed");
+			e.printStackTrace();
+		}
+	}
+	
+	static{
+		System.loadLibrary("LibusbJava");
+	}
+	
+	//Test method for Device List
+	public static List<ByteBuffer> getDeviceList(ByteBuffer ctx){
+		
+		return null;
+	}
+}

@@ -1,0 +1,55 @@
+package ch.ntb.inf.libusbJava.test;
+
+import java.util.List;
+
+import ch.ntb.inf.libusbJava.Context;
+import ch.ntb.inf.libusbJava.Device;
+import ch.ntb.inf.libusbJava.exceptions.LibusbException;
+
+public class UseTestLibusbJava {
+
+	public static void main(String[] args){
+		Context useCtx = null;
+		List<Device> dev = null;
+		System.out.println("UseTests started:");
+		try {
+			useCtx = new Context();
+			//Test Device List
+			System.out.println("Get Device List:");
+			dev = Device.getList(useCtx);
+		} catch (LibusbException e) {
+			System.out.println("Init failed:");
+			e.printStackTrace();
+		}
+		System.out.println("Devices:");
+		for(int i = 0; i < dev.size(); i++){
+			System.out.println("Device " + i + ": Bus: " + dev.get(i).getBusNumber() + " Port: " + dev.get(i).getPortNumber());
+		}
+		System.out.println("Port Numbers:");
+		int[] portNumbers = null; //TODO fix warning below!!
+		for(int i = 0; i < dev.size(); i++){
+			int nofPorts = 0;
+			try {
+				nofPorts = dev.get(i).getPortNumbers(portNumbers);
+				portNumbers = new int[nofPorts];
+				nofPorts = dev.get(i).getPortNumbers(portNumbers);
+				System.out.print("Device " + i + ": " + "Port Numbers: ");
+				for(int j = 0; j < nofPorts; j++){
+					System.out.print(portNumbers[j] + " ");
+				}
+				System.out.println(".");
+			} catch (LibusbException e) {
+				System.out.println("Error occured: getPortNumbers");
+				e.printStackTrace();
+			}
+		}
+		
+		for(int i = dev.size()-1; i > 0; i--){
+			dev.remove(i);
+		}
+	}
+	
+	static{
+		System.loadLibrary("LibusbJava");
+	}
+}

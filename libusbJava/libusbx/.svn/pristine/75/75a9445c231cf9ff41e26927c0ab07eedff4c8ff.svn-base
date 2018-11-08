@@ -1,0 +1,126 @@
+package ch.ntb.inf.libusbJava;
+
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
+
+import ch.ntb.inf.libusbJava.exceptions.LibusbException;
+
+public class Device {
+
+	private Context ctx;
+	
+	private DeviceDescriptor devDesc;
+	private static int nofDevices = 0;
+	private static List<Device> devList;
+	
+	private ByteBuffer nativeDevice;
+	private ByteBuffer nativeHandle;
+	
+//	private Device parent;
+	static{
+		devList = new ArrayList<Device>();
+	}
+	
+	Device(Context ctx, ByteBuffer nativeDevice) { // TODO protected or not???
+		this.ctx = ctx;
+		this.nativeDevice = nativeDevice;
+		nofDevices++;
+	}
+	
+	public static Device get(Context ctx, int vid, int pid) {
+		// TODO
+		// protect this devices
+		return null;
+	}
+	
+	public static List<Device> getList(Context ctx) throws LibusbException {
+		// protect all devices
+		List<ByteBuffer> nativeList = Libusb.getDeviceList(ctx.getNativePointer());
+		for(int i = 0; i < nativeList.size(); i++){
+			devList.add(new Device(ctx, nativeList.get(i)));
+		}
+		return devList;
+	}
+		
+	//gives bus number where device is attached
+	public int getBusNumber(){
+		return Libusb.getBusNumber(nativeDevice);
+	}
+	
+	//gives port number where device is attached
+	public int getPortNumber(){
+		return Libusb.getPortNumber(nativeDevice);
+	}
+	
+	//gives all port numbers from device to root
+	public int getPortNumbers(int[] portNumbers) throws LibusbException {
+		//TODO probably return port numbers in other form? build tree, String?
+		return Libusb.getPortNumbers(ctx.getNativePointer(), nativeDevice, portNumbers);		
+	}
+	
+	public Device getParent(){
+//		return parent; //TODO only possible as long as device_list is not freed via free_device_list
+		return null;
+	}
+	
+	public int getDeviceAddress(){
+		return 0; //TODO
+	}
+	
+	public int getDeviceSpeed(){
+		return 0; //TODO
+		// LIBUSB_SPEED_UNKNOWN out of libusb_speed means that the OS doesn't know or doesn't support returning the negotiated speed
+	}
+	
+//	public void refDevice(){
+//		//TODO increment the reference count of a device
+//	}
+//	
+//	public void unrefDevice(){
+//		//TODO decrement the reference count of a device, if the decrement operation causes the reference count to reach zero, the device shall be destroyed.
+//	}
+	
+	public void open() throws LibusbException{
+		//TODO separate Exception sinnvoll?
+		// LIBUSB_ERROR_NO_MEM, LIBUSB_ERROR_ACCESS, LIBUSB_ERROR_NO_DEVICE, another LIBUSB_ERROR code on other failure
+		// allenfalls überladen open(u16 vendorId, u16 productId)
+	}
+	
+	public void close(){
+		//TODO non-blocking function; no requests are sent over the bus
+	}
+	
+//	//TODO getDevice
+//	public Device getDevice(){
+//		//TODO
+//		return null;
+//	}
+	
+	public DeviceDescriptor getDeviceDescriptor(){
+		return devDesc; //TODO
+	}
+	
+	public void reset(){
+		//TODO reset Device via device_handle
+		//TODO throws LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR on error
+	}
+	
+	public int controlTransfer(){
+		//TODO throw LIBUSB_ERROR_TIMEOUT, LIBUSB_ERROR_PIPE, LIBUSB_ERROR_NO_DEVICE, another LIBUSB_ERROR
+		return 0;
+	}
+	
+	public void bulkTransfer(){
+		//TODO throw LIBUSB_ERROR_TIMEOUT, LIBUSB_ERROR_PIPE, LIBUSB_ERROR_OVERFLOW, LIBUSB_ERROR_NO_DEVICE, another LIBUSB_ERROR
+	}
+	
+	public void interruptTransfer(){
+		//TODO throw LIBUSB_ERROR_TIMEOUT, LIBUSB_ERROR_PIPE, LIBUSB_ERROR_OVERFLOW, LIBUSB_ERROR_NO_DEVICE, another LIBUSB_ERROR
+	}
+	
+	protected void finalize(){
+		Libusb.unrefDevice(nativeDevice);
+		nofDevices--;
+	}
+}

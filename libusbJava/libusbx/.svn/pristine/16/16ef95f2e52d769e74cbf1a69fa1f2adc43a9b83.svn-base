@@ -1,0 +1,76 @@
+package ch.ntb.inf.libusbJava;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import ch.ntb.inf.libusbJava.exceptions.LibusbException;
+
+public class Interface {
+	//contains one Interface with alternate settings
+	private List<InterfaceDescriptor> altSettings;
+	private int nofAltSettings;
+	
+	protected Device device;
+	protected int configIndex;
+	protected int ifaceIndex;
+	
+	public Interface(Device dev, int configIndex, int ifaceIndex){
+		this.device = dev;
+		this.configIndex = configIndex;
+		this.ifaceIndex = ifaceIndex;
+	}
+	
+	public List<InterfaceDescriptor> getAlternateSettings() throws LibusbException{
+		if(altSettings == null){
+			altSettings = new ArrayList<InterfaceDescriptor>();
+		}
+		for(int i = 0; i < getNumberOfAlternateSettings(); i++){
+			if(altSettings.size() - 1 < i){
+				altSettings.add(i, new InterfaceDescriptor(device, configIndex, ifaceIndex, i));
+			}
+			else{
+				altSettings.set(i, new InterfaceDescriptor(device, configIndex, ifaceIndex, i));
+			}			
+		}
+		return altSettings;
+	}
+	
+	public int getNumberOfAlternateSettings() throws LibusbException{
+		nofAltSettings = Libusb.getNofAltSettings(device.getNativeDevice(), configIndex);
+		return nofAltSettings;
+	}
+	
+	public boolean kernelDriverActive(int interfaceNumber){
+		return false; //TODO throws error, true if kernelDriverActive, false else 
+		//LIBUSB_ERROR_NO_DEVICE, LIBUSB_ERROR_NOT_SUPPORTED, another LIBUSB_ERROR on other failure
+	}
+	
+	public void detachKernelDriver(int interfaceNumber){
+		//TODO throws LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR_INVALID_PARAM, LIBUSB_ERROR_NO_DEVICE, LIBUSB_ERROR_NOT_SUPPORTED, another LIBUSB_ERROR code
+	}
+	
+	public void attachKernelDriver(int interfaceNumber){
+		//TODO throws LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR_INVALID_PARAM, LIBUSB_ERROR_NO_DEVICE, LIBUSB_ERROR_NOT_SUPPORTED, LIBUSB_ERROR_BUSY, another LIBUSB_ERROR on other fail
+	}
+	
+	public void setAutoDetachKernelDriver(boolean enable){
+		//TODO
+		// throws LIBUSB_ERROR_NOT_SUPPORTED on platforms without this functionality, LIBUSB_SUCCESS on success
+	}
+	
+	public void claimInterface(int interfaceNumber){
+		//TODO inkl. throws, falls claim nicht möglich
+		// zu überlegen, wie es sich für User anfühlen soll
+		//LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR_BUSY, LIBUSB_ERROR_NO_DEVICE, LIBUSB_ERROR code on other failure
+	}
+	
+	public void releaseInterface(){
+		//TODO throws if fail
+		//LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR_NO_DEVICE, LIBUSB_ERROR code on other failure
+	}
+	
+	public void setAltSetting(int interfaceNumber, int alternateSetting){
+		//TODO throws if fail
+		//LIBUSB_ERROR_NOT_FOUND, LIBUSB_ERROR_NO_DEVICE, another LIBUSB_ERROR code on other failure
+	}
+}

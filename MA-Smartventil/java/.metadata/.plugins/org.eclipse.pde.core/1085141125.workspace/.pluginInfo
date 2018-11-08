@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map>
+	<bundle bundleID="394" localization="bundle" name="%bundle.name" project="org.eclipse.paho.client.mqttv3" provider="%bundle.provider"/>
+	<bundle bundleID="395" class="org.eclipse.paho.mqtt.ui.Activator" localization="OSGI-INF/l10n/bundle" name="%bundle.name" project="org.eclipse.paho.ui.core" provider="%bundle.provider">
+		<library name="."/>
+	</bundle>
+</map>

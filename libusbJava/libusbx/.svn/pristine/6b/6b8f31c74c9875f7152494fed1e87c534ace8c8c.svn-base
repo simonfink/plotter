@@ -1,0 +1,25 @@
+package ch.ntb.inf.libusbJava.exceptions;
+
+public class JavaReferencesNotLoadedException extends LibusbException{
+
+	/**
+	 * TODO
+	 */
+	private static final long serialVersionUID = 8731286800888785328L;
+
+	public JavaReferencesNotLoadedException(){
+		super();
+	}
+	
+	public JavaReferencesNotLoadedException(String message){
+		super(message);
+	}
+	
+	public JavaReferencesNotLoadedException(String message, Throwable cause){
+		super(message, cause);
+	}
+	
+	public JavaReferencesNotLoadedException(Throwable cause){
+		super(cause);
+	}
+}

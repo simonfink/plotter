@@ -1,0 +1,574 @@
+#include <iostream>
+#include <jni.h>
+#include <libusb.h>
+#include "ch_ntb_inf_libusbJava_Libusb.h"
+#include <vector>
+
+#define ERROR_JAVA_REFERENCES_NOT_LOADED	-100
+#define ERROR_JAVA_WRONG_ENVIRONMENT		-101
+#define ERROR_JAVA_ILEGAL_DEVICE_HANDLE		-102
+
+//maximum number of port depth. As per the USB 3.0 specs, this is the current limit
+#define MAX_PORT_DEPTH 7
+
+#define DEBUGON
+
+std::vector<libusb_device_descriptor*> deviceDesc = new std::vector<libusb_device_descriptor*>;
+
+libusb_device_descriptor devDesc;
+libusb_config_descriptor *configDesc;
+libusb_device** devList;
+
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved){
+	JNIEnv * env = NULL;
+
+	if (vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_4) != JNI_OK) {
+		return -1;
+	}
+	//TODO
+
+	return JNI_VERSION_1_4;
+}
+
+void JNI_OnUnload(JavaVM *vm, void *reserved){
+	JNIEnv* env = NULL;
+
+	if(vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_4) == JNI_OK){
+		delete[] &devDesc;
+	}
+}
+
+
+static __inline void JNICALL ThrowLibusbException(JNIEnv *env, jint code){
+	jmethodID constructor = NULL;
+	jthrowable libusbException = NULL;
+
+	jclass clazz = env->FindClass("ch/ntb/inf/libusbJava/exceptions/LibusbException");
+	if(clazz == NULL){
+		goto noClass;
+	}
+
+	constructor = env->GetMethodID(clazz, "<init>", "(I)V");
+	if(constructor == NULL){
+		goto noConstructor;
+	}
+
+	libusbException = (jthrowable)env->NewObject(clazz, constructor, code);
+	if(libusbException == NULL){
+		goto noObject;
+	}
+	if(env->Throw(libusbException) != 0){
+		goto throwFailed;
+	}
+
+	env->DeleteLocalRef(libusbException);
+	env->DeleteLocalRef(clazz);
+
+	return;
+
+	/* Error Handling. All errors covered here are caused by JNI callbacks and have
+	 * therefore already thrown appropriate exceptions in the Java environment.
+	 * Therefore we only have to cleanup what we constructed. */
+
+throwFailed:
+	env->DeleteLocalRef(libusbException);
+
+noObject:
+noConstructor:
+	env->DeleteLocalRef(clazz);
+
+noClass:
+
+	return;
+}
+
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_LibusbJava
+ * Method:    setDebug
+ * Signature: (Ljava/nio/ByteBuffer;I)V
+ */
+JNIEXPORT void JNICALL Java_ch_ntb_inf_libusbJava_LibusbJava_setDebug(JNIEnv *env, jclass obj, jobject ctx, jint level){
+	libusb_context* context = nullptr;
+
+	if(ctx){
+		context = static_cast<libusb_context*>(env->GetDirectBufferAddress(ctx));
+	}
+	libusb_set_debug(context, level);
+}
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_LibusbJava
+ * Method:    init
+ * Signature: ()Ljava/nio/ByteBuffer;
+ */
+JNIEXPORT jobject JNICALL Java_ch_ntb_inf_libusbJava_Libusb_init(JNIEnv *env, jclass obj){
+	int res;
+	libusb_context* context = nullptr;
+
+	res = libusb_init(&context);
+
+	#ifdef DEBUGON
+		std::cout << "res = " << res << std::endl;
+		std::cout << "env = " << env << std::endl;
+		std::cout << "context = " << context << std::endl;
+		std::cout << "&context = " << &context << std::endl;
+	#endif
+
+	if (res != 0)
+	{
+		ThrowLibusbException(env, res);
+		return nullptr;
+	}
+	else
+	{
+		return env->NewDirectByteBuffer(context,0);
+	}
+}
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    exit
+ * Signature: (Ljava/nio/ByteBuffer;)V
+ */
+JNIEXPORT void JNICALL Java_ch_ntb_inf_libusbJava_Libusb_exit(JNIEnv *env, jclass obj, jobject ctx){
+	libusb_context* context = nullptr;
+
+	if(ctx){
+		context = static_cast<libusb_context*>(env->GetDirectBufferAddress(ctx));
+	}
+	std::cout << "exit called" << std::endl;
+	#ifdef DEBUGON
+		std::cout << "env = " << env << std::endl;
+		std::cout << "context = " << context << std::endl;
+		std::cout << "&context = " << &context << std::endl;
+	#endif
+
+	libusb_exit(context);
+}
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    getDeviceList
+ * Signature: (Ljava/nio/ByteBuffer;)Ljava/util/List;
+ */
+JNIEXPORT jobject JNICALL Java_ch_ntb_inf_libusbJava_Libusb_getDeviceList(JNIEnv *env, jclass obj, jobject ctx){
+	libusb_context* context = nullptr;
+	ssize_t cnt;
+
+	jmethodID constructorArrList = nullptr;
+	jmethodID addArrList = nullptr;
+	jclass clazzArrList = nullptr;
+	jobject nativeDevList = nullptr;
+	jobject changed = nullptr;
+	jobject nativeDevPointer = nullptr;
+
+	if(ctx){
+		context = static_cast<libusb_context*>(env->GetDirectBufferAddress(ctx));
+	}
+
+#ifdef DEBUGON
+	std::cout << "env = " << env << std::endl;
+	std::cout << "context = " << context << std::endl;
+	std::cout << "&context = " << &context << std::endl;
+#endif
+
+	cnt = libusb_get_device_list(context, &devList);
+	if(cnt < 0){
+		ThrowLibusbException(env, cnt);
+		libusb_free_device_list(devList, 1);
+		return nullptr;
+	}
+	else if (cnt == 0){
+		libusb_free_device_list(devList, 1);
+		return nullptr;
+	}
+
+	clazzArrList = env->FindClass("java/util/ArrayList");
+	if(clazzArrList == nullptr){
+		goto no_arr_class;
+	}
+	constructorArrList = env->GetMethodID(clazzArrList, "<init>", "(I)V");
+	if(constructorArrList == nullptr){
+		goto no_arr_constructor;
+	}
+	nativeDevList = (jobject)env->NewObject(clazzArrList, constructorArrList, cnt);
+	if(nativeDevList == nullptr){
+		goto no_arr_object;
+	}
+	addArrList = env->GetMethodID(clazzArrList, "add", "(Ljava/lang/Object;)Z");
+	if(addArrList == nullptr){
+		goto method_add_not_found;
+	}
+
+	for(int i = 0; i < cnt; i++){
+		nativeDevPointer = env->NewDirectByteBuffer(devList[i],0);
+#ifdef DEBUGON
+		//TODO remove
+//		std::cout << "devList = " << devList << std::endl;
+//		std::cout << "devList[i] = " << devList[i] << std::endl;
+//		std::cout << "native device ptr = " << nativeDevPointer << std::endl;
+#endif
+		changed = env->CallObjectMethod(nativeDevList, addArrList, nativeDevPointer);
+	}
+
+	env->DeleteLocalRef(clazzArrList);
+
+	return nativeDevList;
+
+	no_dev_class:
+
+	method_add_not_found:
+
+	no_arr_object:
+
+	no_arr_constructor:
+	env->DeleteLocalRef(clazzArrList);
+
+	no_arr_class:
+	return nullptr;
+}
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    freeDeviceList
+ * Signature: (Z)V
+ */
+JNIEXPORT void JNICALL Java_ch_ntb_inf_libusbJava_Libusb_freeDeviceList(JNIEnv *env, jclass obj, jboolean unrefDev){
+	int unrefDevices = 0;
+
+	if(unrefDev){
+		int unrefDevices = 1;
+	}
+
+	libusb_free_device_list(devList, unrefDevices);
+}
+
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    getBusNumber
+ * Signature: (Ljava/nio/ByteBuffer;)I
+ */
+JNIEXPORT jint JNICALL Java_ch_ntb_inf_libusbJava_Libusb_getBusNumber(JNIEnv *env, jclass obj, jobject nativeDevice){
+	libusb_device* dev = nullptr;
+
+	if(nativeDevice){
+		dev = static_cast<libusb_device*>(env->GetDirectBufferAddress(nativeDevice));
+		return static_cast<jint>(libusb_get_bus_number(dev));
+	}
+	else{
+		ThrowLibusbException(env, LIBUSB_ERROR_INVALID_PARAM);
+		return 0;
+	}
+}
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    getPortNumber
+ * Signature: (Ljava/nio/ByteBuffer;)I
+ */
+JNIEXPORT jint JNICALL Java_ch_ntb_inf_libusbJava_Libusb_getPortNumber(JNIEnv *env, jclass obj, jobject nativeDevice){
+	libusb_device* dev = nullptr;
+
+	if(nativeDevice){
+		dev = static_cast<libusb_device*>(env->GetDirectBufferAddress(nativeDevice));
+		return static_cast<jint>(libusb_get_port_number(dev));
+	}
+	else{
+		ThrowLibusbException(env, LIBUSB_ERROR_INVALID_PARAM);
+		return 0;
+	}
+}
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    getPortNumbers
+ * Signature: (Ljava/nio/ByteBuffer;[I)I
+ */
+JNIEXPORT jint JNICALL Java_ch_ntb_inf_libusbJava_Libusb_getPortNumbers(JNIEnv *env, jclass obj, jobject ctx, jobject nativeDevice, jintArray portNumbers){
+	libusb_context *context = nullptr;
+	libusb_device *dev = nullptr;
+	uint8_t *nativePortNumbers = new uint8_t[MAX_PORT_DEPTH];
+
+	if(!nativeDevice){
+		ThrowLibusbException(env, LIBUSB_ERROR_INVALID_PARAM);
+		return 0;
+	}
+	dev = static_cast<libusb_device*>(env->GetDirectBufferAddress(nativeDevice));
+	if(ctx){
+		context = static_cast<libusb_context*>(env->GetDirectBufferAddress(ctx));
+	}
+	jint *portNumsC = env->GetIntArrayElements(portNumbers, NULL);
+	int nofNumbers = libusb_get_port_numbers(dev, nativePortNumbers, MAX_PORT_DEPTH);
+
+	for(int j = 0; j < nofNumbers; j++){
+		portNumsC[j] = static_cast<jint>(nativePortNumbers[j]);
+	}
+	env->SetIntArrayRegion(portNumbers, 0, nofNumbers, portNumsC);
+
+	return nofNumbers;
+}
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    getParent
+ * Signature: (Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
+ */
+JNIEXPORT jobject JNICALL Java_ch_ntb_inf_libusbJava_Libusb_getParent(JNIEnv *env, jclass obj, jobject nativeDevice){
+	libusb_device *dev = nullptr;
+	libusb_device *parentDev = nullptr;
+
+	if(!nativeDevice){
+		ThrowLibusbException(env, LIBUSB_ERROR_INVALID_PARAM);
+		return nullptr;
+	}
+	dev = static_cast<libusb_device*>(env->GetDirectBufferAddress(nativeDevice));
+	parentDev = libusb_get_parent(dev);
+
+//	std::cout << "parentDev native: " << parentDev << std::endl;
+
+	return env->NewDirectByteBuffer(parentDev, 0);
+	//TODO improve error handling
+}
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    getDeviceDescriptor
+ * Signature: (Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
+ */
+JNIEXPORT jobject JNICALL Java_ch_ntb_inf_libusbJava_Libusb_getDeviceDescriptor(JNIEnv *env, jclass obj, jobject nativeDevice){
+	libusb_device *dev = nullptr;
+
+	if(!nativeDevice){
+		ThrowLibusbException(env, LIBUSB_ERROR_INVALID_PARAM);
+		return 0;
+	}
+
+	dev = static_cast<libusb_device*>(env->GetDirectBufferAddress(nativeDevice));
+
+//	libusb_device_descriptor devDesc;
+	libusb_device_descriptor *heap = new libusb_device_descriptor();
+
+//	int cnt = libusb_get_device_descriptor(dev, &devDesc);
+	int cnt = libusb_get_device_descriptor(dev, heap);
+
+	//TODO test this
+	if(deviceDesc.size() == 0){
+		deviceDesc.push_back(heap);
+		std::cout << "added to vector: " << heap << std::endl;
+	}
+	for(int i = 0; i < deviceDesc.size(); i++){		//check if device descriptor already exists, and if so don't create a new entry in vector
+		if(heap == deviceDesc[i]){
+			//device already in vecotr
+			std::cout << "already in list: " << heap << std::endl;
+		}
+		else{
+			libusb_device_descriptor *devDescHeap = new libusb_device_descriptor();
+			devDescHeap = &devDesc;
+			deviceDesc.push_back(heap);
+			std::cout << "added to vector: " << heap << std::endl;
+		}
+	}
+
+	if(cnt != 0){
+		ThrowLibusbException(env, cnt);
+		return nullptr;
+	}
+
+//	return env->NewDirectByteBuffer(&devDesc, 0);
+	return env->NewDirectByteBuffer(heap, 0);
+}
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    getVendorId
+ * Signature: (Ljava/nio/ByteBuffer;)I
+ */
+JNIEXPORT jint JNICALL Java_ch_ntb_inf_libusbJava_Libusb_getVendorId(JNIEnv *env, jclass obj, jobject nativeDevDesc){
+	libusb_device_descriptor *devDesc;
+	jint vid;
+
+	if(!nativeDevDesc){
+		ThrowLibusbException(env, LIBUSB_ERROR_INVALID_PARAM);
+		return 0;
+	}
+	devDesc = static_cast<libusb_device_descriptor*>(env->GetDirectBufferAddress(nativeDevDesc));
+#ifdef DEBUGON
+//	std::cout << "cVid: " << static_cast<int>(devDesc->idVendor) << std::endl;
+#endif
+	vid = static_cast<jint>(devDesc->idVendor);
+
+	return vid;
+}
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    getProductId
+ * Signature: (Ljava/nio/ByteBuffer;)I
+ */
+JNIEXPORT jint JNICALL Java_ch_ntb_inf_libusbJava_Libusb_getProductId(JNIEnv *env, jclass obj, jobject nativeDevDesc){
+	libusb_device_descriptor *devDesc;
+	jint pid;
+
+	if(!nativeDevDesc){
+		ThrowLibusbException(env, LIBUSB_ERROR_INVALID_PARAM);
+		return 0;
+	}
+	devDesc = static_cast<libusb_device_descriptor*>(env->GetDirectBufferAddress(nativeDevDesc));
+	#ifdef DEBUGON
+	//	std::cout << "cPid: " << static_cast<int>(devDesc->idProduct) << std::endl;
+	#endif
+	pid = static_cast<jint>(devDesc->idProduct);
+
+	return pid;
+}
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    getNofConfigurations
+ * Signature: (Ljava/nio/ByteBuffer;)I
+ */
+JNIEXPORT jint JNICALL Java_ch_ntb_inf_libusbJava_Libusb_getNofConfigurations(JNIEnv *env, jclass obj, jobject nativeDevDesc){
+	libusb_device_descriptor *devDesc;
+
+	if(!nativeDevDesc){
+		ThrowLibusbException(env, LIBUSB_ERROR_INVALID_PARAM);
+		return 0;
+	}
+	devDesc = static_cast<libusb_device_descriptor*>(env->GetDirectBufferAddress(nativeDevDesc));
+#ifdef DEBUGON
+	//	std::cout << "cNofConfig: " << static_cast<int>(devDesc->bNumConfigurations) << std::endl;
+#endif
+	return static_cast<jint>(devDesc->bNumConfigurations);
+}
+
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    open
+ * Signature: (Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
+ */
+JNIEXPORT jobject JNICALL Java_ch_ntb_inf_libusbJava_Libusb_open(JNIEnv *env, jclass obj, jobject nativeDevice){
+	libusb_device *dev = nullptr;
+	libusb_device_handle *handle = nullptr;
+
+	if(!nativeDevice){
+		ThrowLibusbException(env, LIBUSB_ERROR_INVALID_PARAM);
+		return nullptr;
+	}
+	dev = static_cast<libusb_device*>(env->GetDirectBufferAddress(nativeDevice));
+
+	int cnt = libusb_open(dev, &handle);
+
+	if (cnt != 0){
+		ThrowLibusbException(env, cnt);
+		return nullptr;
+	}
+	else{
+		return env->NewDirectByteBuffer(handle,0);
+	}
+}
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    close
+ * Signature: (Ljava/nio/ByteBuffer;)V
+ */
+JNIEXPORT void JNICALL Java_ch_ntb_inf_libusbJava_Libusb_close(JNIEnv *env, jclass obj, jobject nativeHandle){
+	libusb_device_handle *handle = nullptr;
+
+	if(!nativeHandle){
+		ThrowLibusbException(env, LIBUSB_ERROR_INVALID_PARAM);
+	}
+	handle = static_cast<libusb_device_handle*>(env->GetDirectBufferAddress(nativeHandle));
+
+	libusb_close(handle);
+}
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    getDeviceAddress
+ * Signature: (Ljava/nio/ByteBuffer;)I
+ */
+JNIEXPORT jint JNICALL Java_ch_ntb_inf_libusbJava_Libusb_getDeviceAddress(JNIEnv *env, jclass obj, jobject nativeDevice){
+	libusb_device *dev = nullptr;
+
+	if(!nativeDevice){
+		ThrowLibusbException(env, LIBUSB_ERROR_INVALID_PARAM);
+		return 0;
+	}
+	dev = static_cast<libusb_device*>(env->GetDirectBufferAddress(nativeDevice));
+	return static_cast<jint>(libusb_get_device_address(dev));
+}
+
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    getDeviceSpeed
+ * Signature: (Ljava/nio/ByteBuffer;)I
+ */
+JNIEXPORT jint JNICALL Java_ch_ntb_inf_libusbJava_Libusb_getDeviceSpeed(JNIEnv *env, jclass obj, jobject nativeDevice){
+	libusb_device *dev = nullptr;
+
+	if(!nativeDevice){
+		ThrowLibusbException(env, LIBUSB_ERROR_INVALID_PARAM);
+		return 0;
+	}
+	dev = static_cast<libusb_device*>(env->GetDirectBufferAddress(nativeDevice));
+	return static_cast<jint>(libusb_get_device_speed(dev));
+}
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    getConfigDescriptor
+ * Signature: (Ljava/nio/ByteBuffer;I)Ljava/nio/ByteBuffer;
+ */
+JNIEXPORT jobject JNICALL Java_ch_ntb_inf_libusbJava_Libusb_getConfigDescriptor(JNIEnv *env, jclass obj, jobject nativeDevice, jint index){
+	libusb_device *dev = nullptr;
+
+	if(!nativeDevice){
+		ThrowLibusbException(env, LIBUSB_ERROR_INVALID_PARAM);
+		return nullptr;
+	}
+	dev = static_cast<libusb_device*>(env->GetDirectBufferAddress(nativeDevice));
+
+	int cnt = libusb_get_config_descriptor(dev, static_cast<uint8_t>(index), &configDesc);
+	if (cnt != 0){
+		ThrowLibusbException(env, cnt);
+		return nullptr;
+	}
+	else{
+		std::cout << "configDesc: " << configDesc << std::endl;
+		return env->NewDirectByteBuffer(configDesc, 0);
+	}
+}
+
+/*
+ * Class:     ch_ntb_inf_libusbJava_Libusb
+ * Method:    getActiveConfigDescriptor
+ * Signature: (Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
+ */
+JNIEXPORT jobject JNICALL Java_ch_ntb_inf_libusbJava_Libusb_getActiveConfigDescriptor(JNIEnv *env, jclass obj, jobject nativeDevice){
+	libusb_device *dev = nullptr;
+	libusb_config_descriptor *configDesc; //TODO
+
+	if(!nativeDevice){
+		ThrowLibusbException(env, LIBUSB_ERROR_INVALID_PARAM);
+		return nullptr;
+	}
+	dev = static_cast<libusb_device*>(env->GetDirectBufferAddress(nativeDevice));
+
+	int cnt = libusb_get_active_config_descriptor(dev, &configDesc);
+
+	if (cnt != 0){
+		ThrowLibusbException(env, cnt);
+		return nullptr;
+	}
+	else{
+		std::cout << "activeConfig: " << configDesc << std::endl;
+		return env->NewDirectByteBuffer(configDesc, 0);
+	}
+}
+
+

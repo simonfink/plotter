@@ -1,0 +1,28 @@
+package ch.ntb.inf.libusbJava;
+
+public enum DescriptorType{
+	device(0x01),
+	config(0x02),
+	string(0x03),
+	iface(0x04),
+	endpoint(0x05),
+	bos(0x0f),
+	deviceCapability(0x10),
+	hid(0x21),
+	report(0x22),
+	physical(0x23),
+	hub(0x29),
+	superspeedHub(0x2a),
+	ssEndpointCompanion(0x30);
+	
+	private DescriptorType(final int num){
+		this.num = num;
+	}
+	
+	//Internal state
+	private int num;
+	
+	public int getType(){
+		return num;
+	}
+}

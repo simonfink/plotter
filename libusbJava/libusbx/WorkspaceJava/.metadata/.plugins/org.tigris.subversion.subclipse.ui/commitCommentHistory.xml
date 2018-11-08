@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommitComments>	<CommitComment>support for Control Transfer added</CommitComment>
+	<CommitComment>License added in source files, control transfer implemented (java part)</CommitComment>
+	<CommitComment>debug prints fixed</CommitComment>
+	<CommitComment>fix for multiple devices with same vid, pid on windows with composite devices</CommitComment>
+</CommitComments>

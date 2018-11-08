@@ -1,0 +1,16 @@
+package ch.ntb.inf.libusbJava;
+
+import java.util.List;
+
+public class InterfaceDescriptor extends Descriptor{
+
+	private List<EndpointDescriptor> endpointDesc;
+	
+	public List<EndpointDescriptor> getEndpointDescriptors(){
+		return endpointDesc;
+	}
+	
+	public int getNumberOfEndpoints(){
+		return endpointDesc.size();
+	}
+}

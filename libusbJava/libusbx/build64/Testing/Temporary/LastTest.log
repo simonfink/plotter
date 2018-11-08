@@ -1,0 +1,24 @@
+Start testing: May 17 09:24 W. Europe Daylight Time
+----------------------------------------------------------
+1/1 Testing: UseTestMPC555BDI
+1/1 Test: UseTestMPC555BDI
+Command: "C:/Program Files/Java/jdk1.7.0_67/bin/java.exe" "-Djava.library.path=C:/Users/libusb/libusbdev/libusbx/build64/LibusbJava/" "-cp" "C:/Users/libusb/libusbdev/libusbx/build64/java/src/LibusbJava.jar" "ch.ntb.inf.libusb.test.UseTestLibusbJava"
+Directory: C:/Users/libusb/libusbdev/libusbx/build64
+"UseTestMPC555BDI" start time: May 17 09:24 W. Europe Daylight Time
+Output:
+----------------------------------------------------------
+UseTests started:
+search Device:
+Error occured: search
+ch.ntb.inf.libusb.exceptions.NoDeviceException
+	at ch.ntb.inf.libusb.Device.search(Device.java:116)
+	at ch.ntb.inf.libusb.test.UseTestLibusbJava.main(UseTestLibusbJava.java:71)
+<end of output>
+Test time =   0.16 sec
+----------------------------------------------------------
+Test Passed.
+"UseTestMPC555BDI" end time: May 17 09:24 W. Europe Daylight Time
+"UseTestMPC555BDI" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: May 17 09:24 W. Europe Daylight Time

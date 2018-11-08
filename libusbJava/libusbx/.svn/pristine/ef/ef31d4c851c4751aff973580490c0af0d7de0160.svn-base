@@ -1,0 +1,8 @@
+package ch.ntb.inf.libusbJava.ctest;
+
+public class LibusbJavaHandling {
+
+	public static void main(){
+		
+	}
+}
